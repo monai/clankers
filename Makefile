@@ -44,16 +44,16 @@ install-container:
 	docker exec $(CONTAINER) rm -rf $(AGENT_CLAUDE_DIR)/skills $(AGENT_AGENTS_DIR)/skills
 	docker exec $(CONTAINER) mkdir -p $(AGENT_CLAUDE_DIR)/skills $(AGENT_AGENTS_DIR)/skills
 	docker cp -a $(SKILLS_DIR)/. $(CONTAINER):$(AGENT_CLAUDE_DIR)/skills
-	docker cp -a CLAUDE.md $(CONTAINER):$(AGENT_CLAUDE_DIR)/CLAUDE.md
-	docker cp -a settings.json $(CONTAINER):$(AGENT_CLAUDE_DIR)/settings.json
+	docker cp -a claude/CLAUDE.md $(CONTAINER):$(AGENT_CLAUDE_DIR)/CLAUDE.md
+	docker cp -a claude/settings.json $(CONTAINER):$(AGENT_CLAUDE_DIR)/settings.json
 	docker cp -a $(SKILLS_DIR)/. $(CONTAINER):$(AGENT_AGENTS_DIR)/skills
-	docker cp -a CLAUDE.md $(CONTAINER):$(AGENT_AGENTS_DIR)/AGENTS.md
+	docker cp -a claude/CLAUDE.md $(CONTAINER):$(AGENT_AGENTS_DIR)/AGENTS.md
 
 install-host:
 	rm -rf $(HOST_CLAUDE_DIR)/skills $(HOST_AGENTS_DIR)/skills
 	mkdir -p $(HOST_CLAUDE_DIR)/skills $(HOST_AGENTS_DIR)/skills
 	cp -a $(SKILLS_DIR)/. $(HOST_CLAUDE_DIR)/skills
-	cp -a CLAUDE.md $(HOST_CLAUDE_DIR)/CLAUDE.md
-	cp -a settings.json $(HOST_CLAUDE_DIR)/settings.json
+	cp -a claude/CLAUDE.md $(HOST_CLAUDE_DIR)/CLAUDE.md
+	cp -a claude/settings.json $(HOST_CLAUDE_DIR)/settings.json
 	cp -a $(SKILLS_DIR)/. $(HOST_AGENTS_DIR)/skills
-	cp -a CLAUDE.md $(HOST_AGENTS_DIR)/AGENTS.md
+	cp -a claude/CLAUDE.md $(HOST_AGENTS_DIR)/AGENTS.md
