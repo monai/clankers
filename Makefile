@@ -1,5 +1,7 @@
 MATTPOCOCK_SKILLS_DIR := ../mattpocock-skills/skills
 SKILLS_DIR := skills
+AGENT_CLAUDE_DIR := /home/agent/.claude
+AGENT_AGENTS_DIR := /home/agent/.agents
 
 ADOPTED_ENGINEERING_SKILLS := \
 	ask-matt \
@@ -32,3 +34,15 @@ $(addprefix $(SKILLS_DIR)/,$(ADOPTED_ENGINEERING_SKILLS)): $(SKILLS_DIR)/%: $(MA
 
 $(addprefix $(SKILLS_DIR)/,$(ADOPTED_PRODUCTIVITY_SKILLS)): $(SKILLS_DIR)/%: $(MATTPOCOCK_SKILLS_DIR)/productivity/%
 	cp -r $< $@
+
+.PHONY: all install
+
+install:
+	@test -n "$(CONTAINER)" || { echo "make install: CONTAINER is not set. Use: make install CONTAINER=<name>" >&2; exit 1; }
+	docker exec $(CONTAINER) rm -rf $(AGENT_CLAUDE_DIR)/skills $(AGENT_AGENTS_DIR)/skills
+	docker exec $(CONTAINER) mkdir -p $(AGENT_CLAUDE_DIR)/skills $(AGENT_AGENTS_DIR)/skills
+	docker cp -a $(SKILLS_DIR)/. $(CONTAINER):$(AGENT_CLAUDE_DIR)/skills
+	docker cp -a CLAUDE.md $(CONTAINER):$(AGENT_CLAUDE_DIR)/CLAUDE.md
+	docker cp -a settings.json $(CONTAINER):$(AGENT_CLAUDE_DIR)/settings.json
+	docker cp -a $(SKILLS_DIR)/. $(CONTAINER):$(AGENT_AGENTS_DIR)/skills
+	docker cp -a CLAUDE.md $(CONTAINER):$(AGENT_AGENTS_DIR)/AGENTS.md
