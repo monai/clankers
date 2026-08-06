@@ -17,3 +17,7 @@ docker run --rm -it -v "$PWD:/workspace" sandbox
 ```sh
 docker run --rm -it -v agent-home:/home/agent -v "$PWD:/workspace" sandbox
 ```
+
+```sh
+docker run --rm -it -e TERM_PROGRAM=$TERM_PROGRAM -v "$PWD:/workspace" sandbox
+```
