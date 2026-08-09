@@ -65,6 +65,10 @@ ENV PATH="/nix/var/nix/profiles/sandbox/bin:/usr/local/bin:/home/agent/.local/bi
 
 COPY --from=builder /tmp/final-root/ /
 
+RUN cat > /etc/profile.d/00-sandbox-tools.sh <<'EOF'
+export PATH="/nix/var/nix/profiles/sandbox/bin:$PATH"
+EOF
+
 RUN groupadd --gid "$AGENT_GID" agent \
     && useradd --uid "$AGENT_UID" --gid "$AGENT_GID" --create-home --shell /bin/bash agent \
     && mkdir -p /home/agent/.local/bin /workspace \
