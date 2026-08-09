@@ -27,7 +27,8 @@ ADOPTED_ENGINEERING_SKILLS := \
 
 ADOPTED_PRODUCTIVITY_SKILLS := \
 	grill-me \
-	grilling
+	grilling \
+	writing-for-agents
 
 all: $(addprefix $(SKILLS_DIR)/,$(ADOPTED_ENGINEERING_SKILLS) $(ADOPTED_PRODUCTIVITY_SKILLS))
 
