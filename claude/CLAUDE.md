@@ -17,3 +17,11 @@ Prose by default, under six lines unless code or a genuine list is required. Hea
 State each fact once. One recommendation, not a survey. For code changes, the diff is the explanation: one line on why, none on what.
 
 Use fully qualified or canonical names.
+
+## Tool Environments
+
+Use a preexisting tool environment only after asserting it matches the current platform, runtime, lock/config, and command.
+
+If compatibility is unknown or false, run through an agent-owned environment/cache/build dir via the tool’s standard override, leaving the preexisting artifact untouched.
+
+Do not report checks as blocked until you have tried either a compatible existing environment or an isolated agent-owned one. In the final response, state which path was used; if checks still failed, state the concrete blocker.
