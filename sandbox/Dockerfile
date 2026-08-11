@@ -9,7 +9,6 @@ RUN set -eux; \
     cd /tmp/sandbox-nix; \
     nix flake lock; \
     nix profile add --profile /nix/var/nix/profiles/sandbox .#sandbox-tools; \
-    /nix/var/nix/profiles/sandbox/bin/node --version; \
     /nix/var/nix/profiles/sandbox/bin/python --version; \
     /nix/var/nix/profiles/sandbox/bin/uv --version; \
     /nix/var/nix/profiles/sandbox/bin/pi --version; \
@@ -27,6 +26,8 @@ FROM debian:trixie-slim
 ARG AGENT_UID=1000
 ARG AGENT_GID=1000
 
+COPY rootfs/ /
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
@@ -36,6 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     jq \
     less \
+    nodejs=26.* \
     openssh-client \
     patch \
     procps \
@@ -55,7 +57,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     && rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/nix/var/nix/profiles/sandbox/bin:/usr/local/bin:/home/agent/.local/bin:$PATH" \
+ENV PATH="/usr/local/bin:/home/agent/.local/bin:$PATH:/nix/var/nix/profiles/sandbox/bin" \
     LD_LIBRARY_PATH=/nix/var/nix/profiles/sandbox/lib \
     NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
     TERM=xterm-256color \
@@ -66,7 +68,7 @@ ENV PATH="/nix/var/nix/profiles/sandbox/bin:/usr/local/bin:/home/agent/.local/bi
 COPY --from=builder /tmp/final-root/ /
 
 RUN cat > /etc/profile.d/00-sandbox-tools.sh <<'EOF'
-export PATH="/nix/var/nix/profiles/sandbox/bin:$PATH"
+export PATH="$PATH:/nix/var/nix/profiles/sandbox/bin"
 EOF
 
 RUN groupadd --gid "$AGENT_GID" agent \

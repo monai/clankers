@@ -28,7 +28,6 @@
             paths = with pkgs; [
               claude-code
               codex
-              nodejs
               pi-coding-agent
               python314
               uv
