@@ -1,29 +1,11 @@
-FROM nixos/nix:2.35.1-arm64 AS builder
-
-ENV NIX_CONFIG="experimental-features = nix-command flakes" \
-    DISABLE_AUTOUPDATER=1
-
-COPY flake.nix /tmp/sandbox-nix/flake.nix
-
-RUN set -eux; \
-    cd /tmp/sandbox-nix; \
-    nix flake lock; \
-    nix profile add --profile /nix/var/nix/profiles/sandbox .#sandbox-tools; \
-    /nix/var/nix/profiles/sandbox/bin/uv --version; \
-    /nix/var/nix/profiles/sandbox/bin/pi --version; \
-    /nix/var/nix/profiles/sandbox/bin/codex --version; \
-    /nix/var/nix/profiles/sandbox/bin/claude --version; \
-    cd /; \
-    nix-store --query --requisites /nix/var/nix/profiles/sandbox > /tmp/nix-store-paths; \
-    mkdir -p /tmp/final-root/nix/var/nix/profiles; \
-    xargs -a /tmp/nix-store-paths -r cp -a --parents -t /tmp/final-root; \
-    cp -a /nix/var/nix/profiles/sandbox* /tmp/final-root/nix/var/nix/profiles/; \
-    rm -rf /tmp/sandbox-nix /root/.cache
-
 FROM debian:trixie-slim
 
 ARG AGENT_UID=1000
 ARG AGENT_GID=1000
+ARG CLAUDE_CODE_VERSION=2.1.227
+ARG CODEX_VERSION=0.147.0
+ARG PI_CODING_AGENT_VERSION=0.84.1
+ARG UV_VERSION=0.12.3
 
 COPY rootfs/ /
 
@@ -58,19 +40,34 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     && rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/usr/local/bin:/home/agent/.local/bin:$PATH:/nix/var/nix/profiles/sandbox/bin" \
-    LD_LIBRARY_PATH=/nix/var/nix/profiles/sandbox/lib \
-    NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
+RUN set -eux; \
+    case "$(dpkg --print-architecture)" in \
+      amd64) uv_arch="x86_64" ;; \
+      arm64) uv_arch="aarch64" ;; \
+      *) echo "unsupported uv architecture: $(dpkg --print-architecture)" >&2; exit 1 ;; \
+    esac; \
+    uv_asset="uv-${uv_arch}-unknown-linux-gnu.tar.gz"; \
+    uv_url="https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/${uv_asset}"; \
+    curl -fsSLo "/tmp/${uv_asset}" "$uv_url"; \
+    curl -fsSLo "/tmp/${uv_asset}.sha256" "${uv_url}.sha256"; \
+    cd /tmp; \
+    sha256sum -c "${uv_asset}.sha256"; \
+    tar -xzf "$uv_asset"; \
+    install -m 0755 "uv-${uv_arch}-unknown-linux-gnu/uv" /usr/local/bin/uv; \
+    install -m 0755 "uv-${uv_arch}-unknown-linux-gnu/uvx" /usr/local/bin/uvx; \
+    rm -rf "/tmp/${uv_asset}" "/tmp/${uv_asset}.sha256" "/tmp/uv-${uv_arch}-unknown-linux-gnu"
+
+RUN npm install -g \
+    "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" \
+    "@earendil-works/pi-coding-agent@${PI_CODING_AGENT_VERSION}" \
+    "@openai/codex@${CODEX_VERSION}" \
+    && npm cache clean --force
+
+ENV PATH="/usr/local/bin:/home/agent/.local/bin:$PATH" \
     TERM=xterm-256color \
     COLORTERM=truecolor \
     LESS=-R \
     DISABLE_AUTOUPDATER=1
-
-COPY --from=builder /tmp/final-root/ /
-
-RUN cat > /etc/profile.d/00-sandbox-tools.sh <<'EOF'
-export PATH="$PATH:/nix/var/nix/profiles/sandbox/bin"
-EOF
 
 RUN groupadd --gid "$AGENT_GID" agent \
     && useradd --uid "$AGENT_UID" --gid "$AGENT_GID" --create-home --shell /bin/bash agent \
