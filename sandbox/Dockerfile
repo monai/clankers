@@ -9,7 +9,6 @@ RUN set -eux; \
     cd /tmp/sandbox-nix; \
     nix flake lock; \
     nix profile add --profile /nix/var/nix/profiles/sandbox .#sandbox-tools; \
-    /nix/var/nix/profiles/sandbox/bin/python --version; \
     /nix/var/nix/profiles/sandbox/bin/uv --version; \
     /nix/var/nix/profiles/sandbox/bin/pi --version; \
     /nix/var/nix/profiles/sandbox/bin/codex --version; \
@@ -41,6 +40,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     openssh-client \
     patch \
     procps \
+    python-is-python3 \
+    python3 \
     ripgrep \
     rsync \
     shellcheck \

@@ -29,7 +29,6 @@
               claude-code
               codex
               pi-coding-agent
-              python314
               uv
             ];
 
