@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     jq \
     less \
-    nodejs=26.* \
+    nodejs \
     openssh-client \
     patch \
     procps \
