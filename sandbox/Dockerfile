@@ -10,17 +10,27 @@ ARG UV_VERSION=0.12.3
 COPY rootfs/ /
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash-completion \
     ca-certificates \
+    build-essential \
     curl \
+    dnsutils \
     fd-find \
     file \
     gh \
     git \
+    gnupg \
+    iproute2 \
+    iputils-ping \
     jq \
     less \
+    lsof \
+    make \
+    netcat-openbsd \
     nodejs \
     openssh-client \
     patch \
+    pkg-config \
     procps \
     python-is-python3 \
     python3 \
@@ -29,7 +39,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     shellcheck \
     shfmt \
     sqlite3 \
+    strace \
     sudo \
+    time \
     tmux \
     tree \
     unzip \
