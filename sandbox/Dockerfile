@@ -2,9 +2,9 @@ FROM debian:trixie-slim
 
 ARG AGENT_UID=1000
 ARG AGENT_GID=1000
-ARG CLAUDE_CODE_VERSION=2.1.227
+ARG CLAUDE_CODE_VERSION=2.1.233
 ARG CODEX_VERSION=0.147.0
-ARG PI_CODING_AGENT_VERSION=0.84.1
+ARG PI_CODING_AGENT_VERSION=0.84.2
 ARG UV_VERSION=0.12.3
 
 COPY rootfs/ /
@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rsync \
     shellcheck \
     shfmt \
+    socat \
     sqlite3 \
     strace \
     sudo \
