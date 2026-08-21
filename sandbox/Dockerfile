@@ -9,9 +9,11 @@ ARG UV_VERSION=0.12.3
 
 COPY rootfs/ /
 
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash-completion \
-    ca-certificates \
     build-essential \
     curl \
     dnsutils \
@@ -24,6 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iputils-ping \
     jq \
     less \
+    locales \
     lsof \
     make \
     netcat-openbsd \
@@ -51,7 +54,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     xz-utils \
     yq \
     zip \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    && locale-gen en_US.UTF-8
 
 RUN set -eux; \
     case "$(dpkg --print-architecture)" in \
@@ -80,6 +85,8 @@ ENV PATH="/usr/local/bin:/home/agent/.local/bin:$PATH" \
     TERM=xterm-256color \
     COLORTERM=truecolor \
     LESS=-R \
+    LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
     DISABLE_AUTOUPDATER=1
 
 RUN groupadd --gid "$AGENT_GID" agent \
