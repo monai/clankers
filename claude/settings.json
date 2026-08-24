@@ -10,6 +10,7 @@
     "deny": ["AskUserQuestion"]
   },
   "model": "sonnet",
+  "outputStyle": "Slave",
   "disableArtifact": true,
   "statusLine": {
     "type": "command",
