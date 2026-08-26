@@ -51,6 +51,7 @@ install-container:
 	docker cp -a $(SKILLS_DIR)/. $(CONTAINER):$(AGENT_CLAUDE_DIR)/skills
 	docker cp -a claude/CLAUDE.md $(CONTAINER):$(AGENT_CLAUDE_DIR)/CLAUDE.md
 	docker cp -a claude/settings.json $(CONTAINER):$(AGENT_CLAUDE_DIR)/settings.json
+	docker cp -a claude/agents $(CONTAINER):$(AGENT_CLAUDE_DIR)/agents
 	docker cp -a $(SKILLS_DIR)/. $(CONTAINER):$(AGENT_AGENTS_DIR)/skills
 	docker cp -a claude/CLAUDE.md $(CONTAINER):$(AGENT_AGENTS_DIR)/AGENTS.md
 
@@ -60,5 +61,6 @@ install-host:
 	cp -a $(SKILLS_DIR)/. $(HOST_CLAUDE_DIR)/skills
 	cp -a claude/CLAUDE.md $(HOST_CLAUDE_DIR)/CLAUDE.md
 	cp -a claude/settings.json $(HOST_CLAUDE_DIR)/settings.json
+	cp -a claude/agents $(HOST_CLAUDE_DIR)/agents
 	cp -a $(SKILLS_DIR)/. $(HOST_AGENTS_DIR)/skills
 	cp -a claude/CLAUDE.md $(HOST_AGENTS_DIR)/AGENTS.md
