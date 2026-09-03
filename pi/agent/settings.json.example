@@ -1,0 +1,9 @@
+{
+  "enableInstallTelemetry": false,
+  "httpIdleTimeoutMs": 14400000,
+  "retry": {
+    "provider": {
+      "timeoutMs": 14400000
+    }
+  }
+}
