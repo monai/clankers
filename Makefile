@@ -1,7 +1,12 @@
 MATTPOCOCK_SKILLS_DIR := ../mattpocock-skills/skills
 SKILLS_DIR := skills
+PI_DIR := pi/agent
+PI_EXTENSIONS := $(notdir $(wildcard $(PI_DIR)/extensions/*))
+
 AGENT_CLAUDE_DIR := /home/agent/.claude
 AGENT_AGENTS_DIR := /home/agent/.agents
+AGENT_PI_DIR := /home/agent/.pi/agent
+
 HOST_CLAUDE_DIR := $(HOME)/.claude
 HOST_AGENTS_DIR := $(HOME)/.agents
 
@@ -42,7 +47,7 @@ $(addprefix $(SKILLS_DIR)/,$(ADOPTED_ENGINEERING_SKILLS)): $(SKILLS_DIR)/%: $(MA
 $(addprefix $(SKILLS_DIR)/,$(ADOPTED_PRODUCTIVITY_SKILLS)): $(SKILLS_DIR)/%: $(MATTPOCOCK_SKILLS_DIR)/productivity/%
 	cp -r $< $@
 
-.PHONY: all install-container install-host
+.PHONY: all install-container install-host install-pi
 
 install-container:
 	@test -n "$(CONTAINER)" || { echo "make install-container: CONTAINER is not set. Use: make install-container CONTAINER=<name>" >&2; exit 1; }
@@ -64,3 +69,10 @@ install-host:
 	cp -a claude/agents $(HOST_CLAUDE_DIR)/agents
 	cp -a $(SKILLS_DIR)/. $(HOST_AGENTS_DIR)/skills
 	cp -a claude/CLAUDE.md $(HOST_AGENTS_DIR)/AGENTS.md
+
+install-pi:
+	@test -n "$(CONTAINER)" || { echo "make install-pi: CONTAINER is not set. Use: make install-pi CONTAINER=<name>" >&2; exit 1; }
+	docker exec $(CONTAINER) sh -c 'cd $(AGENT_PI_DIR)/extensions 2>/dev/null && rm -rf $(PI_EXTENSIONS); true'
+	docker exec $(CONTAINER) mkdir -p $(AGENT_PI_DIR)/extensions
+	docker cp -a $(PI_DIR)/extensions/. $(CONTAINER):$(AGENT_PI_DIR)/extensions
+	docker cp -a $(PI_DIR)/APPEND_SYSTEM.md $(CONTAINER):$(AGENT_PI_DIR)/APPEND_SYSTEM.md
