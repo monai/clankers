@@ -1,0 +1,6 @@
+.scratch
+archive
+memory
+node_modules
+
+/extensions
