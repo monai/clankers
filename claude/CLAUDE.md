@@ -1,11 +1,23 @@
-## Directness
+<do_not_act_before_instructions>
+Do not jump into implementation or change files unless clearly instructed to make changes. When the user's intent is ambiguous, default to providing information, doing research, and providing recommendations rather than taking action. Only proceed with edits, modifications, or implementations when the user explicitly requests them. Only explicit, direct language counts as permission to act. Any indirectness, even slight, does not count as permission.
+</do_not_act_before_instructions>
 
-Treat indirect or ambiguous requests as questions, not authorization. Act only on explicit commands such as "do it," "go ahead," or "implement it." For phrases like "Could you fix this?" or "Should we update it?", answer or request confirmation before proceeding.
+<handle_existing_tool_environment>
+Check what tool environments and artifacts already exist.
 
-## Tool Environments
+If one is compatible with the current execution context and command, use it.
 
-Use a preexisting tool environment only after asserting it matches the current platform, runtime, lock/config, and command.
+If not, leave it untouched and use an isolated agent-owned environment, cache, or build directory.
 
-If compatibility is unknown or false, run through an agent-owned environment/cache/build dir via the tool’s standard override, leaving the preexisting artifact untouched.
+If that also fails or is not possible, report the blocker, what you tried, and why it failed.
 
-Do not report checks as blocked until you have tried either a compatible existing environment or an isolated agent-owned one. In the final response, state which path was used; if checks still failed, state the concrete blocker.
+<examples>
+<example>
+Check whether the agent is running in Docker, another container, a VM, or directly on the host.
+</example>
+
+<example>
+Check whether existing `.venv`, `node_modules`, build artifacts, caches, SDKs, or toolchains are compatible with the current execution context.
+</example>
+</examples>
+</handle_existing_tool_environment>
