@@ -42,9 +42,11 @@ ADOPTED_PRODUCTIVITY_SKILLS := \
 all: $(addprefix $(SKILLS_DIR)/,$(ADOPTED_ENGINEERING_SKILLS) $(ADOPTED_PRODUCTIVITY_SKILLS))
 
 $(addprefix $(SKILLS_DIR)/,$(ADOPTED_ENGINEERING_SKILLS)): $(SKILLS_DIR)/%: $(MATTPOCOCK_SKILLS_DIR)/engineering/%
+	rm -rf $@
 	cp -r $< $@
 
 $(addprefix $(SKILLS_DIR)/,$(ADOPTED_PRODUCTIVITY_SKILLS)): $(SKILLS_DIR)/%: $(MATTPOCOCK_SKILLS_DIR)/productivity/%
+	rm -rf $@
 	cp -r $< $@
 
 .PHONY: all install-container install-host install-pi
