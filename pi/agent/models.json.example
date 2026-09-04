@@ -27,28 +27,100 @@
         }
       ]
     },
+    "vllm-coder": {
+      "baseUrl": "http://vllm:8000/v1",
+      "api": "openai-completions",
+      "apiKey": "dummy",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": false
+      },
+      "models": [
+        {
+          "id": "Qwen/Qwen3.8-27B-FP8",
+          "name": "Qwen3.8 27B FP8 (coder)",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 131072,
+          "maxTokens": 16384,
+          "samplingParams": {
+            "temperature": 0.6,
+            "top_p": 0.95,
+            "top_k": 20,
+            "min_p": 0.0,
+            "presence_penalty": 0.0
+          },
+          "compat": {
+            "thinkingFormat": "qwen-chat-template",
+            "maxTokensField": "max_tokens"
+          },
+          "chatTemplateKwargs": {
+            "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
+            "reasoning_effort": { "$var": "thinking.effort" }
+          }
+        }
+      ]
+    },
     "mlx": {
       "baseUrl": "http://host.docker.internal:8080/v1",
-        "api": "openai-completions",
-        "apiKey": "dummy",
-        "compat": {
-          "supportsDeveloperRole": false,
-          "supportsReasoningEffort": false
-        },
-        "models": [
-          {
-            "id": "mlx-community/Qwen3.8-27B-8bit",
-            "name": "Qwen3.8 27B 8bit",
-            "reasoning": true,
-            "input": ["text", "image"],
-            "contextWindow": 131072,
-            "maxTokens": 16384,
-            "compat": {
-              "thinkingFormat": "qwen-chat-template",
-              "maxTokensField": "max_tokens"
-            }
+      "api": "openai-completions",
+      "apiKey": "dummy",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": false
+      },
+      "models": [
+        {
+          "id": "mlx-community/Qwen3.8-27B-8bit",
+          "name": "Qwen3.8 27B 8bit",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 131072,
+          "maxTokens": 16384,
+          "compat": {
+            "thinkingFormat": "qwen-chat-template",
+            "maxTokensField": "max_tokens"
+          },
+          "chatTemplateKwargs": {
+            "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
+            "reasoning_effort": { "$var": "thinking.effort" }
           }
-        ]
+        }
+      ]
+    },
+    "mlx-coder": {
+      "baseUrl": "http://host.docker.internal:8080/v1",
+      "api": "openai-completions",
+      "apiKey": "dummy",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": false
+      },
+      "models": [
+        {
+          "id": "mlx-community/Qwen3.8-27B-8bit",
+          "name": "Qwen3.8 27B 8bit (coder)",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 131072,
+          "maxTokens": 16384,
+          "samplingParams": {
+            "temperature": 0.6,
+            "top_p": 0.95,
+            "top_k": 20,
+            "min_p": 0.0,
+            "presence_penalty": 0.0
+          },
+          "compat": {
+            "thinkingFormat": "qwen-chat-template",
+            "maxTokensField": "max_tokens"
+          },
+          "chatTemplateKwargs": {
+            "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
+            "reasoning_effort": { "$var": "thinking.effort" }
+          }
+        }
+      ]
     }
   }
 }
