@@ -15,7 +15,7 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 16384,
+          "maxTokens": 32768,
           "compat": {
             "thinkingFormat": "qwen-chat-template",
             "maxTokensField": "max_tokens"
@@ -42,7 +42,7 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 16384,
+          "maxTokens": 32768,
           "samplingParams": {
             "temperature": 0.6,
             "top_p": 0.95,
@@ -76,7 +76,7 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 16384,
+          "maxTokens": 32768,
           "compat": {
             "thinkingFormat": "qwen-chat-template",
             "maxTokensField": "max_tokens"
@@ -103,7 +103,7 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 16384,
+          "maxTokens": 32768,
           "samplingParams": {
             "temperature": 0.6,
             "top_p": 0.95,
