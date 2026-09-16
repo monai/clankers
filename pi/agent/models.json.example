@@ -22,7 +22,7 @@
           },
           "chatTemplateKwargs": {
             "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
-            "reasoning_effort": { "$var": "thinking.effort" }
+            "reasoning_effort": { "$var": "thinking.effort", "omitWhenOff": true }
           }
         }
       ]
@@ -56,7 +56,7 @@
           },
           "chatTemplateKwargs": {
             "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
-            "reasoning_effort": { "$var": "thinking.effort" }
+            "reasoning_effort": { "$var": "thinking.effort", "omitWhenOff": true }
           }
         }
       ]
@@ -83,7 +83,7 @@
           },
           "chatTemplateKwargs": {
             "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
-            "reasoning_effort": { "$var": "thinking.effort" }
+            "reasoning_effort": { "$var": "thinking.effort", "omitWhenOff": true }
           }
         }
       ]
@@ -117,7 +117,7 @@
           },
           "chatTemplateKwargs": {
             "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
-            "reasoning_effort": { "$var": "thinking.effort" }
+            "reasoning_effort": { "$var": "thinking.effort", "omitWhenOff": true }
           }
         }
       ]
