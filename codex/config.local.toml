@@ -1,0 +1,9 @@
+[marketplaces.clanker-janker]
+source_type = "local"
+source = "/workspace"
+
+[plugins."essentials@clanker-janker"]
+enabled = true
+
+[plugins."mattpocock-skills@clanker-janker"]
+enabled = true

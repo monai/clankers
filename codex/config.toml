@@ -1,0 +1,14 @@
+[marketplaces.clanker-janker]
+source_type = "git"
+source = "https://github.com/monai/clankers.git"
+sparse_paths = [
+  ".agents/plugins/marketplace.json",
+  "marketplace/plugins/essentials",
+  "marketplace/plugins/mattpocock-skills",
+]
+
+[plugins."essentials@clanker-janker"]
+enabled = true
+
+[plugins."mattpocock-skills@clanker-janker"]
+enabled = true

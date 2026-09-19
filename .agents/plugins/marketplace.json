@@ -1,0 +1,32 @@
+{
+  "name": "clanker-janker",
+  "interface": {
+    "displayName": "Clanker Janker"
+  },
+  "plugins": [
+    {
+      "name": "essentials",
+      "source": {
+        "source": "local",
+        "path": "./marketplace/plugins/essentials"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "mattpocock-skills",
+      "source": {
+        "source": "local",
+        "path": "./marketplace/plugins/mattpocock-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
