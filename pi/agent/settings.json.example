@@ -5,5 +5,18 @@
     "provider": {
       "timeoutMs": 14400000
     }
-  }
+  },
+  "compaction": {
+    "modelOverrides": {
+      "vllm/Qwen/Qwen3.8-27B-FP8": {
+        "reserveTokens": 90112,
+        "keepRecentTokens": 16384
+      },
+      "vllm-coder/Qwen/Qwen3.8-27B-FP8": {
+        "reserveTokens": 90112,
+        "keepRecentTokens": 16384
+      }
+    }
+  },
+  "defaultThinkingLevel": "low"
 }
