@@ -15,7 +15,7 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 81920,
+          "maxTokens": 65536,
           "compat": {
             "thinkingFormat": "chat-template",
             "maxTokensField": "max_tokens",
@@ -43,7 +43,7 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 81920,
+          "maxTokens": 65536,
           "samplingParams": {
             "temperature": 0.6,
             "top_p": 0.95,
