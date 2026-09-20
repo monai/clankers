@@ -15,14 +15,15 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 32768,
+          "maxTokens": 81920,
           "compat": {
-            "thinkingFormat": "qwen-chat-template",
-            "maxTokensField": "max_tokens"
-          },
-          "chatTemplateKwargs": {
-            "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
-            "reasoning_effort": { "$var": "thinking.effort", "omitWhenOff": true }
+            "thinkingFormat": "chat-template",
+            "maxTokensField": "max_tokens",
+            "chatTemplateKwargs": {
+              "enable_thinking": { "$var": "thinking.enabled" },
+              "reasoning_effort": { "$var": "thinking.effort" },
+              "preserve_thinking": false
+            }
           }
         }
       ]
@@ -42,7 +43,7 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 32768,
+          "maxTokens": 81920,
           "samplingParams": {
             "temperature": 0.6,
             "top_p": 0.95,
@@ -51,12 +52,13 @@
             "presence_penalty": 0.0
           },
           "compat": {
-            "thinkingFormat": "qwen-chat-template",
-            "maxTokensField": "max_tokens"
-          },
-          "chatTemplateKwargs": {
-            "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
-            "reasoning_effort": { "$var": "thinking.effort", "omitWhenOff": true }
+            "thinkingFormat": "chat-template",
+            "maxTokensField": "max_tokens",
+            "chatTemplateKwargs": {
+              "enable_thinking": { "$var": "thinking.enabled" },
+              "reasoning_effort": { "$var": "thinking.effort" },
+              "preserve_thinking": false
+            }
           }
         }
       ]
@@ -76,14 +78,14 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 32768,
+          "maxTokens": 114688,
           "compat": {
             "thinkingFormat": "qwen-chat-template",
             "maxTokensField": "max_tokens"
           },
           "chatTemplateKwargs": {
             "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
-            "reasoning_effort": { "$var": "thinking.effort", "omitWhenOff": true }
+            "reasoning_effort": { "$var": "thinking.effort" }
           }
         }
       ]
@@ -103,7 +105,7 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 131072,
-          "maxTokens": 32768,
+          "maxTokens": 114688,
           "samplingParams": {
             "temperature": 0.6,
             "top_p": 0.95,
@@ -117,7 +119,7 @@
           },
           "chatTemplateKwargs": {
             "enable_thinking": { "$var": "thinking.enabled", "omitWhenOff": true },
-            "reasoning_effort": { "$var": "thinking.effort", "omitWhenOff": true }
+            "reasoning_effort": { "$var": "thinking.effort" }
           }
         }
       ]
