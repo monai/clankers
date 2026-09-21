@@ -8,7 +8,7 @@
       "name": "essentials",
       "source": {
         "source": "local",
-        "path": "./marketplace/plugins/essentials"
+        "path": "./plugins/essentials"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -20,7 +20,7 @@
       "name": "mattpocock-skills",
       "source": {
         "source": "local",
-        "path": "./marketplace/plugins/mattpocock-skills"
+        "path": "./plugins/mattpocock-skills"
       },
       "policy": {
         "installation": "AVAILABLE",

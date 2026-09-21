@@ -3,8 +3,8 @@ source_type = "git"
 source = "https://github.com/monai/clankers.git"
 sparse_paths = [
   ".agents/plugins/marketplace.json",
-  "marketplace/plugins/essentials",
-  "marketplace/plugins/mattpocock-skills",
+  "plugins/essentials",
+  "plugins/mattpocock-skills",
 ]
 
 [plugins."essentials@clanker-janker"]
