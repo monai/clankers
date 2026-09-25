@@ -4,7 +4,9 @@ ARG AGENT_UID=1000
 ARG AGENT_GID=1000
 ARG CLAUDE_CODE_VERSION=2.1.280
 ARG CODEX_VERSION=0.156.1
+ARG MERMAID_CLI_VERSION=12.0.0
 ARG PI_CODING_AGENT_VERSION=0.87.1
+ARG PUPPETEER_VERSION=25.12.0
 ARG UV_VERSION=0.12.18
 
 COPY rootfs/ /
@@ -15,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash-completion \
     build-essential \
+    chromium \
     curl \
     dnsutils \
     fd-find \
@@ -58,6 +61,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && locale-gen en_US.UTF-8
 
+RUN sed -i 's/^CHROMIUM_FLAGS=""/CHROMIUM_FLAGS="--no-sandbox"/' /usr/bin/chromium
+
 RUN set -eux; \
     case "$(dpkg --print-architecture)" in \
       amd64) uv_arch="x86_64" ;; \
@@ -75,10 +80,12 @@ RUN set -eux; \
     install -m 0755 "uv-${uv_arch}-unknown-linux-gnu/uvx" /usr/local/bin/uvx; \
     rm -rf "/tmp/${uv_asset}" "/tmp/${uv_asset}.sha256" "/tmp/uv-${uv_arch}-unknown-linux-gnu"
 
-RUN npm install -g \
+RUN PUPPETEER_SKIP_DOWNLOAD=true npm install -g \
     "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" \
     "@earendil-works/pi-coding-agent@${PI_CODING_AGENT_VERSION}" \
+    "@mermaid-js/mermaid-cli@${MERMAID_CLI_VERSION}" \
     "@openai/codex@${CODEX_VERSION}" \
+    "puppeteer@${PUPPETEER_VERSION}" \
     && npm cache clean --force
 
 ENV PATH="/usr/local/bin:/home/agent/.local/bin:$PATH" \
@@ -87,7 +94,8 @@ ENV PATH="/usr/local/bin:/home/agent/.local/bin:$PATH" \
     LESS=-R \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
-    DISABLE_AUTOUPDATER=1
+    DISABLE_AUTOUPDATER=1 \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 RUN groupadd --gid "$AGENT_GID" agent \
     && useradd --uid "$AGENT_UID" --gid "$AGENT_GID" --create-home --shell /bin/bash agent \
