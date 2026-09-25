@@ -6,7 +6,6 @@ ARG CLAUDE_CODE_VERSION=2.1.282
 ARG CODEX_VERSION=0.157.0
 ARG MERMAID_CLI_VERSION=12.0.0
 ARG PI_CODING_AGENT_VERSION=0.87.1
-ARG PUPPETEER_VERSION=25.12.0
 ARG UV_VERSION=0.12.19
 
 COPY rootfs/ /
@@ -80,12 +79,11 @@ RUN set -eux; \
     install -m 0755 "uv-${uv_arch}-unknown-linux-gnu/uvx" /usr/local/bin/uvx; \
     rm -rf "/tmp/${uv_asset}" "/tmp/${uv_asset}.sha256" "/tmp/uv-${uv_arch}-unknown-linux-gnu"
 
-RUN PUPPETEER_SKIP_DOWNLOAD=true npm install -g \
+RUN npm install -g \
     "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" \
     "@earendil-works/pi-coding-agent@${PI_CODING_AGENT_VERSION}" \
     "@mermaid-js/mermaid-cli@${MERMAID_CLI_VERSION}" \
     "@openai/codex@${CODEX_VERSION}" \
-    "puppeteer@${PUPPETEER_VERSION}" \
     && npm cache clean --force
 
 ENV PATH="/usr/local/bin:/home/agent/.local/bin:$PATH" \
