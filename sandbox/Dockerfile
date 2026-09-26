@@ -4,7 +4,6 @@ ARG AGENT_UID=1000
 ARG AGENT_GID=1000
 ARG CLAUDE_CODE_VERSION=2.1.283
 ARG CODEX_VERSION=0.157.1
-ARG MERMAID_CLI_VERSION=12.0.0
 ARG PI_CODING_AGENT_VERSION=0.87.1
 ARG UV_VERSION=0.12.19
 
@@ -82,7 +81,6 @@ RUN set -eux; \
 RUN npm install -g \
     "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" \
     "@earendil-works/pi-coding-agent@${PI_CODING_AGENT_VERSION}" \
-    "@mermaid-js/mermaid-cli@${MERMAID_CLI_VERSION}" \
     "@openai/codex@${CODEX_VERSION}" \
     && npm cache clean --force
 
