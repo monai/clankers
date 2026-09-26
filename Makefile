@@ -1,80 +1,13 @@
-MATTPOCOCK_SKILLS_DIR := ../mattpocock-skills/skills
-SKILLS_DIR := skills
-PI_DIR := pi/agent
-PI_EXTENSIONS := $(notdir $(wildcard $(PI_DIR)/extensions/*))
+USER_CLAUDE_DIR := $(HOME)/.claude
+USER_CODEX_DIR := $(HOME)/.codex
 
-AGENT_CLAUDE_DIR := /home/agent/.claude
-AGENT_AGENTS_DIR := /home/agent/.agents
-AGENT_PI_DIR := /home/agent/.pi/agent
+.PHONY: install
 
-HOST_CLAUDE_DIR := $(HOME)/.claude
-HOST_AGENTS_DIR := $(HOME)/.agents
+install:
+	mkdir -p $(USER_CLAUDE_DIR)
+	cp -a claude/CLAUDE.md $(USER_CLAUDE_DIR)/CLAUDE.md
+	cp -a claude/settings.json $(USER_CLAUDE_DIR)/settings.json
 
-ADOPTED_ENGINEERING_SKILLS := \
-	ask-matt \
-	code-review \
-	codebase-design \
-	diagnosing-bugs \
-	domain-modeling \
-	grill-with-docs \
-	implement \
-	improve-codebase-architecture \
-	prototype \
-	research \
-	resolving-merge-conflicts \
-	setup-matt-pocock-skills \
-	tdd \
-	to-spec \
-	to-tickets \
-	triage \
-	wayfinder \
-	wizard
-
-ADOPTED_PRODUCTIVITY_SKILLS := \
-	grill-me \
-	grilling \
-	handoff \
-	teach \
-	to-questionnaire \
-	wait-what \
-	writing-for-agents
-
-all: $(addprefix $(SKILLS_DIR)/,$(ADOPTED_ENGINEERING_SKILLS) $(ADOPTED_PRODUCTIVITY_SKILLS))
-
-$(addprefix $(SKILLS_DIR)/,$(ADOPTED_ENGINEERING_SKILLS)): $(SKILLS_DIR)/%: $(MATTPOCOCK_SKILLS_DIR)/engineering/%
-	rm -rf $@
-	cp -r $< $@
-
-$(addprefix $(SKILLS_DIR)/,$(ADOPTED_PRODUCTIVITY_SKILLS)): $(SKILLS_DIR)/%: $(MATTPOCOCK_SKILLS_DIR)/productivity/%
-	rm -rf $@
-	cp -r $< $@
-
-.PHONY: all install-container install-host install-pi
-
-install-container:
-	@test -n "$(CONTAINER)" || { echo "make install-container: CONTAINER is not set. Use: make install-container CONTAINER=<name>" >&2; exit 1; }
-	docker exec $(CONTAINER) rm -rf $(AGENT_CLAUDE_DIR)/skills $(AGENT_AGENTS_DIR)/skills
-	docker exec $(CONTAINER) mkdir -p $(AGENT_CLAUDE_DIR)/skills $(AGENT_AGENTS_DIR)/skills
-	docker cp -a $(SKILLS_DIR)/. $(CONTAINER):$(AGENT_CLAUDE_DIR)/skills
-	docker cp -a claude/CLAUDE.md $(CONTAINER):$(AGENT_CLAUDE_DIR)/CLAUDE.md
-	docker cp -a claude/settings.json $(CONTAINER):$(AGENT_CLAUDE_DIR)/settings.json
-	docker cp -a claude/agents $(CONTAINER):$(AGENT_CLAUDE_DIR)/agents
-	docker cp -a $(SKILLS_DIR)/. $(CONTAINER):$(AGENT_AGENTS_DIR)/skills
-	docker cp -a claude/CLAUDE.md $(CONTAINER):$(AGENT_AGENTS_DIR)/AGENTS.md
-
-install-host:
-	rm -rf $(HOST_CLAUDE_DIR)/skills $(HOST_AGENTS_DIR)/skills
-	mkdir -p $(HOST_CLAUDE_DIR)/skills $(HOST_AGENTS_DIR)/skills
-	cp -a $(SKILLS_DIR)/. $(HOST_CLAUDE_DIR)/skills
-	cp -a claude/CLAUDE.md $(HOST_CLAUDE_DIR)/CLAUDE.md
-	cp -a claude/settings.json $(HOST_CLAUDE_DIR)/settings.json
-	cp -a claude/agents $(HOST_CLAUDE_DIR)/agents
-	cp -a $(SKILLS_DIR)/. $(HOST_AGENTS_DIR)/skills
-	cp -a claude/CLAUDE.md $(HOST_AGENTS_DIR)/AGENTS.md
-
-install-pi:
-	@test -n "$(CONTAINER)" || { echo "make install-pi: CONTAINER is not set. Use: make install-pi CONTAINER=<name>" >&2; exit 1; }
-	docker exec $(CONTAINER) sh -c 'cd $(AGENT_PI_DIR)/extensions 2>/dev/null && rm -rf $(PI_EXTENSIONS); true'
-	docker exec $(CONTAINER) mkdir -p $(AGENT_PI_DIR)/extensions
-	docker cp -a $(PI_DIR)/extensions/. $(CONTAINER):$(AGENT_PI_DIR)/extensions
-	docker cp -a $(PI_DIR)/APPEND_SYSTEM.md $(CONTAINER):$(AGENT_PI_DIR)/APPEND_SYSTEM.md
+	mkdir -p $(USER_CODEX_DIR)/agents
+	cp -a plugins/essentials/agents/. $(USER_CODEX_DIR)/agents/
+	cp -a codex/config.toml $(USER_CODEX_DIR)/config.toml
