@@ -8,7 +8,6 @@
   },
   "homepage": "https://github.com/monai/clankers",
   "repository": "https://github.com/monai/clankers",
-  "license": "MIT",
   "keywords": [
     "skills",
     "sample",
@@ -17,13 +16,12 @@
   "interface": {
     "displayName": "Essentials",
     "shortDescription": "Bits and pieces for your clanker janker.",
-    "longDescription": "A small essentials plugin for shared clanker setup and sample skills.",
+    "longDescription": "A small essentials plugin for clanker setup.",
     "developerName": "monai",
     "category": "Productivity",
     "capabilities": [
       "Skills"
-    ],
-    "defaultPrompt": "Use the essentials sample skill."
+    ]
   },
   "skills": "./skills/"
 }

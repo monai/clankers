@@ -8,11 +8,9 @@
   },
   "homepage": "https://github.com/monai/clankers",
   "repository": "https://github.com/monai/clankers",
-  "license": "MIT",
   "keywords": [
     "skills",
     "sample",
     "clankers"
-  ],
-  "skills": "./skills/"
+  ]
 }
