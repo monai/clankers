@@ -1,14 +1,26 @@
+model = "gpt-6-sol"
+model_reasoning_effort = "medium"
+sandbox_mode = "danger-full-access"
+approval_policy = "never"
+
 [marketplaces.clanker-janker]
 source_type = "git"
 source = "https://github.com/monai/clankers.git"
-sparse_paths = [
-  ".agents/plugins/marketplace.json",
-  "plugins/essentials",
-  "plugins/mattpocock-skills",
-]
 
 [plugins."essentials@clanker-janker"]
 enabled = true
 
 [plugins."mattpocock-skills@clanker-janker"]
 enabled = true
+
+[projects."/workspace"]
+trust_level = "trusted"
+
+[tui]
+status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-used", "context-window-size"]
+status_line_use_colors = true
+screen_reader_detection_done = true
+fullscreen_transcript = false
+
+[tui.model_availability_nux]
+gpt-6-astra = 4
