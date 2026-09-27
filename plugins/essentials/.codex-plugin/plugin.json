@@ -13,15 +13,5 @@
     "sample",
     "clankers"
   ],
-  "interface": {
-    "displayName": "Essentials",
-    "shortDescription": "Bits and pieces for your clanker janker.",
-    "longDescription": "A small essentials plugin for clanker setup.",
-    "developerName": "monai",
-    "category": "Productivity",
-    "capabilities": [
-      "Skills"
-    ]
-  },
   "skills": "./skills/"
 }

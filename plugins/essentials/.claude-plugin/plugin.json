@@ -12,5 +12,7 @@
     "skills",
     "sample",
     "clankers"
-  ]
+  ],
+  "agents": "./agents/",
+  "skills": "./skills/"
 }
