@@ -14,6 +14,11 @@
       "name": "mattpocock-skills",
       "source": "./plugins/mattpocock-skills",
       "description": "Matt Pocock's agent skills for real engineering: grilling, spec/ticket flows, TDD, code review, domain modelling and more. Plug-and-play, not vibe coding."
+    },
+    {
+      "name": "pstack",
+      "source": "./plugins/pstack",
+      "description": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence."
     }
   ]
 }
