@@ -3,6 +3,9 @@ model_reasoning_effort = "medium"
 sandbox_mode = "danger-full-access"
 approval_policy = "never"
 
+[features]
+mentions_v2 = false
+
 [marketplaces.clanker-janker]
 source_type = "git"
 source = "https://github.com/monai/clankers.git"
