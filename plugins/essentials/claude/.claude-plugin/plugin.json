@@ -13,6 +13,10 @@
     "sample",
     "clankers"
   ],
-  "agents": "./agents/",
+  "agents": [
+    "./agents/crawler.md",
+    "./agents/scout.md",
+    "./agents/worker.md"
+  ],
   "skills": "./skills/"
 }

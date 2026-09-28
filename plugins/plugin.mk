@@ -17,7 +17,11 @@ CODEX_FILES := codex/.codex-plugin/plugin.json $(CODEX_SKILL_MDS) $(CODEX_POLICI
 
 plugin: $(CLAUDE_FILES) $(CODEX_FILES)
 
-claude/.claude-plugin/plugin.json codex/.codex-plugin/plugin.json: $(SOURCE_MANIFEST)
+claude/.claude-plugin/plugin.json: $(SOURCE_MANIFEST)
+	@mkdir -p $(@D)
+	jq --args 'if has("agents") then .agents = $$ARGS.positional else . end' $(sort $(filter %.md,$(AGENT_FILES:%=./agents/%))) < $< > $@
+
+codex/.codex-plugin/plugin.json: $(SOURCE_MANIFEST)
 	@mkdir -p $(@D)
 	cp $< $@
 
