@@ -3,6 +3,8 @@ name: swarm
 description: "Fan out N parallel workers, drain them, and return one report. Use for /swarm, 'swarm this', or parallel coverage, races, gauntlets, and exploration."
 ---
 
+In Codex, translate Cursor tools and models per `../poteto-mode/references/codex.md`.
+
 # Swarm
 
 Fan out N parallel cloud workers. They may cover separate slices, race the same brief, or mix both. The parent waits, aggregates, and returns one report.

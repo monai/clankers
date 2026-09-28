@@ -3,6 +3,8 @@ name: no-comments
 description: "Spawn Comment Sicko, fix accepted findings, and offer encodings for claimed constraints."
 ---
 
+In Codex, translate Cursor tools and models per `../poteto-mode/references/codex.md`.
+
 # No comments
 
 Spawn Comment Sicko. Act on accepted findings.

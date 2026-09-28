@@ -3,6 +3,8 @@ name: reflect
 description: Spawn three parallel review subagents over the active transcript, surface learnings, and route each to a concrete edit on an existing skill. Use when the user says reflect.
 ---
 
+In Codex, translate Cursor tools and models per `../poteto-mode/references/codex.md`.
+
 # Reflect
 
 Mine the current conversation for durable learnings, then route them into skill edits.

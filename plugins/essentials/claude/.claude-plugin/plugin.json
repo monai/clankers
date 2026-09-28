@@ -14,9 +14,7 @@
     "clankers"
   ],
   "agents": [
-    "./agents/crawler.md",
-    "./agents/scout.md",
-    "./agents/worker.md"
+    "./agents/crawler.md"
   ],
   "skills": "./skills/"
 }
