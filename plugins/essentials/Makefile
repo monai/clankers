@@ -8,6 +8,6 @@ SKILLS := $(patsubst $(SOURCE_SKILLS)/%/,%,$(dir $(wildcard $(SOURCE_SKILLS)/*/S
 all: plugin
 
 clean:
-	$(RM) -r claude codex
+	$(RM) -r claude codex pi
 
 include ../plugin.mk

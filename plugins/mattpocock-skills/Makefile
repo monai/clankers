@@ -12,6 +12,6 @@ $(SOURCE_MANIFEST):
 	git clone --depth=1 https://github.com/mattpocock/skills.git $(UPSTREAM)
 
 clean:
-	$(RM) -r build claude codex
+	$(RM) -r build claude codex pi
 
 include ../plugin.mk

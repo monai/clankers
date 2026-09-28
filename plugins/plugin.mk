@@ -12,10 +12,28 @@ CODEX_SKILL_FILES := $(filter-out $(CODEX_SKILL_MDS) $(CODEX_POLICIES),$(SKILL_F
 CLAUDE_FILES := claude/.claude-plugin/plugin.json $(CLAUDE_SKILL_FILES) $(AGENT_FILES:%=claude/agents/%)
 CODEX_FILES := codex/.codex-plugin/plugin.json $(CODEX_SKILL_MDS) $(CODEX_POLICIES) $(CODEX_SKILL_FILES) $(AGENT_FILES:%=codex/agents/%)
 
+pi_skill_name = $(if $(PI_NAMESPACE),$(if $(filter $(1),$(PI_UNNAMESPACED_SKILLS)),,$(PI_NAMESPACE)-))$(notdir $(1))
+pi_skill_dir = pi/skills/$(patsubst ./%,%,$(dir $(1))$(call pi_skill_name,$(1)))
+
+define PI_SKILL
+PI_FILES += $$(patsubst $(1)/%,$(call pi_skill_dir,$(1))/%,$$(filter $(1)/%,$$(SKILL_FILES)))
+
+$(call pi_skill_dir,$(1))/SKILL.md: $(SOURCE_SKILLS)/$(1)/SKILL.md $(SCRIPTS)/set-skill-name.awk
+	@mkdir -p $$(@D)
+	awk -v name=$(call pi_skill_name,$(1)) -f $(SCRIPTS)/set-skill-name.awk $$< > $$@
+
+$(call pi_skill_dir,$(1))/%: $(SOURCE_SKILLS)/$(1)/%
+	@mkdir -p $$(@D)
+	cp $$< $$@
+endef
+
+PI_FILES :=
+$(foreach skill,$(SKILLS),$(eval $(call PI_SKILL,$(skill))))
+
 .PHONY: plugin
 .SECONDEXPANSION:
 
-plugin: $(CLAUDE_FILES) $(CODEX_FILES)
+plugin: $(CLAUDE_FILES) $(CODEX_FILES) $(PI_FILES)
 
 claude/.claude-plugin/plugin.json: $(SOURCE_MANIFEST)
 	@mkdir -p $(@D)
