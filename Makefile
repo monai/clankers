@@ -9,5 +9,5 @@ install:
 	cp -a claude/settings.json $(USER_CLAUDE_DIR)/settings.json
 
 	mkdir -p $(USER_CODEX_DIR)/agents
-	cp -a plugins/essentials/agents/. $(USER_CODEX_DIR)/agents/
+	cp -a plugins/essentials/src/agents/. $(USER_CODEX_DIR)/agents/
 	cp -a codex/config.toml $(USER_CODEX_DIR)/config.toml

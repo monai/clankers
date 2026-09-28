@@ -7,17 +7,17 @@
   "plugins": [
     {
       "name": "essentials",
-      "source": "./plugins/essentials",
+      "source": "./plugins/essentials/claude",
       "description": "Bits and pieces for your clanker janker."
     },
     {
       "name": "mattpocock-skills",
-      "source": "./plugins/mattpocock-skills",
+      "source": "./plugins/mattpocock-skills/claude",
       "description": "Matt Pocock's agent skills for real engineering: grilling, spec/ticket flows, TDD, code review, domain modelling and more. Plug-and-play, not vibe coding."
     },
     {
       "name": "pstack",
-      "source": "./plugins/pstack",
+      "source": "./plugins/pstack/claude",
       "description": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence."
     }
   ]

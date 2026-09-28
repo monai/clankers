@@ -1,34 +1,19 @@
+CURSOR_REPOSITORY := build/cursor-plugins
+UPSTREAM := $(CURSOR_REPOSITORY)/pstack
+SOURCE_MANIFEST := $(UPSTREAM)/.cursor-plugin/plugin.json
+SOURCE_SKILLS := $(UPSTREAM)/skills
+SOURCE_AGENTS := $(UPSTREAM)/agents
+SKILLS := $(patsubst $(SOURCE_SKILLS)/%/,%,$(dir $(wildcard $(SOURCE_SKILLS)/*/SKILL.md)))
+
 .PHONY: all clean
 
-CURSOR_REPOSITORY := build/cursor-plugins
-PSTACK_SOURCE := $(CURSOR_REPOSITORY)/pstack
-CURSOR_MANIFEST := $(PSTACK_SOURCE)/.cursor-plugin/plugin.json
-MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+all: | $(SOURCE_MANIFEST)
+	$(MAKE) plugin
 
-all: skills agents .codex-plugin/plugin.json .claude-plugin/plugin.json
-
-$(CURSOR_MANIFEST):
-	mkdir -p build
+$(SOURCE_MANIFEST):
 	git clone --depth=1 https://github.com/cursor/plugins.git $(CURSOR_REPOSITORY)
 
-skills: $(CURSOR_MANIFEST) $(MAKEFILE_PATH)
-	$(RM) -r $@
-	cp -a $(PSTACK_SOURCE)/skills $@
-	touch $@
-
-agents: $(CURSOR_MANIFEST) $(MAKEFILE_PATH)
-	$(RM) -r $@
-	cp -a $(PSTACK_SOURCE)/agents $@
-	touch $@
-
-.codex-plugin/plugin.json: $(CURSOR_MANIFEST) $(MAKEFILE_PATH)
-	mkdir -p $(@D)
-	cp $< $@
-
-.claude-plugin/plugin.json: $(CURSOR_MANIFEST) $(MAKEFILE_PATH)
-	mkdir -p $(@D)
-	cp $< $@
-
 clean:
-	$(RM) -r $(CURSOR_REPOSITORY) skills agents
-	$(RM) .codex-plugin/plugin.json .claude-plugin/plugin.json
+	$(RM) -r build claude codex
+
+include ../plugin.mk

@@ -8,7 +8,7 @@
       "name": "essentials",
       "source": {
         "source": "local",
-        "path": "./plugins/essentials"
+        "path": "./plugins/essentials/codex"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -20,7 +20,7 @@
       "name": "mattpocock-skills",
       "source": {
         "source": "local",
-        "path": "./plugins/mattpocock-skills"
+        "path": "./plugins/mattpocock-skills/codex"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -32,7 +32,7 @@
       "name": "pstack",
       "source": {
         "source": "local",
-        "path": "./plugins/pstack"
+        "path": "./plugins/pstack/codex"
       },
       "policy": {
         "installation": "AVAILABLE",
