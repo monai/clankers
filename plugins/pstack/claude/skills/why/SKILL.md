@@ -4,6 +4,8 @@ description: "Use for 'why does X work this way', 'why we picked Y', design rati
 disable-model-invocation: true
 ---
 
+In Claude Code, translate Cursor tools and models per `../poteto-mode/references/claude-code.md`.
+
 # Why
 
 Investigate the motivation and intent behind code.

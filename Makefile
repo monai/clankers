@@ -2,7 +2,7 @@ USER_CLAUDE_DIR := $(HOME)/.claude
 USER_CODEX_DIR := $(HOME)/.codex
 USER_PI_DIR := $(or $(PI_CODING_AGENT_DIR),$(HOME)/.pi/agent)
 CODEX_AGENT_DIRS := $(wildcard plugins/*/codex/agents)
-PI_SKILL_DIRS := $(wildcard plugins/*/pi/skills)
+PI_PLUGINS := $(patsubst plugins/%/pi/skills,%,$(wildcard plugins/*/pi/skills))
 
 .PHONY: install
 
@@ -18,4 +18,4 @@ install:
 
 	rm -rf $(USER_PI_DIR)/skills
 	mkdir -p $(USER_PI_DIR)/skills
-	$(foreach dir,$(PI_SKILL_DIRS),tar -C $(dir) -cf - . | tar -C $(USER_PI_DIR)/skills -xf -;)
+	$(foreach p,$(PI_PLUGINS),mkdir -p $(USER_PI_DIR)/skills/$(p) && tar -C plugins/$(p)/pi/skills -cf - . | tar -C $(USER_PI_DIR)/skills/$(p) -xf -;)

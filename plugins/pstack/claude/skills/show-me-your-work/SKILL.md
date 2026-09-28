@@ -4,6 +4,8 @@ description: "Keep a reviewable decision trail for long-running or unattended wo
 disable-model-invocation: true
 ---
 
+In Claude Code, translate Cursor tools and models per `../poteto-mode/references/claude-code.md`.
+
 # Show me your work
 
 Keep one canonical log.

@@ -4,6 +4,8 @@ description: "Spawn Comment Sicko, fix accepted findings, and offer encodings fo
 disable-model-invocation: true
 ---
 
+In Claude Code, translate Cursor tools and models per `../poteto-mode/references/claude-code.md`.
+
 # No comments
 
 Spawn Comment Sicko. Act on accepted findings.

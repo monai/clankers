@@ -4,6 +4,8 @@ description: "Reconstruct your recent working context from your own chat history
 disable-model-invocation: true
 ---
 
+In Claude Code, translate Cursor tools and models per `../poteto-mode/references/claude-code.md`.
+
 # Recall
 
 **Before you start or resume work, you rebuild the user's recent working context and hand back a tight capsule of where things stand now and what to do next.**

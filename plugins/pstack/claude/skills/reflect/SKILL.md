@@ -4,6 +4,8 @@ description: Spawn three parallel review subagents over the active transcript, s
 disable-model-invocation: true
 ---
 
+In Claude Code, translate Cursor tools and models per `../poteto-mode/references/claude-code.md`.
+
 # Reflect
 
 Mine the current conversation for durable learnings, then route them into skill edits.
