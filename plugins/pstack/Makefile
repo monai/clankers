@@ -29,8 +29,8 @@ plugin: $(CLAUDE_CODE_REFERENCE) $(CODEX_REFERENCE)
 
 $(CLAUDE_CODE_REFERENCE): claude-code.md
 	@mkdir -p $(@D)
-	cp $< $@
+	$(call copy,$<,$@)
 
 $(CODEX_REFERENCE): codex.md
 	@mkdir -p $(@D)
-	cp $< $@
+	$(call copy,$<,$@)

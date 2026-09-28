@@ -1,4 +1,5 @@
 SCRIPTS := $(dir $(lastword $(MAKEFILE_LIST)))scripts
+copy = cat $(1) > $(2) && if [ -x $(1) ]; then chmod +x $(2); fi
 
 SKILL_FILES := $(if $(SKILLS),$(patsubst $(SOURCE_SKILLS)/%,%,$(shell find $(SKILLS:%=$(SOURCE_SKILLS)/%) -type f ! -name .DS_Store)))
 AGENT_FILES := $(filter-out $(EXCLUDED_AGENTS:%=%.md),$(if $(wildcard $(SOURCE_AGENTS)),$(patsubst $(SOURCE_AGENTS)/%,%,$(shell find $(SOURCE_AGENTS) -type f ! -name .DS_Store))))
@@ -41,11 +42,11 @@ $(CLAUDE_SKILL_MDS): claude/skills/%/SKILL.md: $(SOURCE_SKILLS)/%/SKILL.md $(SCR
 
 $(CLAUDE_SKILL_FILES): claude/skills/%: $(SOURCE_SKILLS)/%
 	@mkdir -p $(@D)
-	cp $< $@
+	$(call copy,$<,$@)
 
 $(CODEX_SKILL_FILES): codex/skills/%: $(SOURCE_SKILLS)/%
 	@mkdir -p $(@D)
-	cp $< $@
+	$(call copy,$<,$@)
 
 $(CLAUDE_AGENT_MDS): claude/agents/%.md: $(SOURCE_AGENTS)/%.md $(SCRIPTS)/set-name.awk
 	@mkdir -p $(@D)
@@ -53,7 +54,7 @@ $(CLAUDE_AGENT_MDS): claude/agents/%.md: $(SOURCE_AGENTS)/%.md $(SCRIPTS)/set-na
 
 $(CLAUDE_AGENT_FILES): claude/agents/%: $(SOURCE_AGENTS)/%
 	@mkdir -p $(@D)
-	cp $< $@
+	$(call copy,$<,$@)
 
 $(CODEX_AGENT_TOMLS): codex/agents/%.toml: $(SOURCE_AGENTS)/%.md $(SCRIPTS)/agent-to-toml.awk
 	@mkdir -p $(@D)
@@ -61,7 +62,7 @@ $(CODEX_AGENT_TOMLS): codex/agents/%.toml: $(SOURCE_AGENTS)/%.md $(SCRIPTS)/agen
 
 $(CODEX_AGENT_FILES): codex/agents/%: $(SOURCE_AGENTS)/%
 	@mkdir -p $(@D)
-	cp $< $@
+	$(call copy,$<,$@)
 
 $(CODEX_SKILL_MDS): codex/skills/%/SKILL.md: $(SOURCE_SKILLS)/%/SKILL.md $(SCRIPTS)/strip-model-invocation.awk $(SCRIPTS)/set-name.awk $(SCRIPTS)/add-note.awk
 	@mkdir -p $(@D)
@@ -77,4 +78,4 @@ $(PI_SKILL_MDS): pi/skills/%/SKILL.md: $(SOURCE_SKILLS)/%/SKILL.md $(SCRIPTS)/se
 
 $(PI_SKILL_FILES): pi/skills/%: $(SOURCE_SKILLS)/%
 	@mkdir -p $(@D)
-	cp $< $@
+	$(call copy,$<,$@)
