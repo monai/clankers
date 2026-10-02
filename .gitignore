@@ -2,3 +2,5 @@
 archive
 memory
 node_modules
+
+.env
