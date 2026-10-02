@@ -48,6 +48,6 @@ jobs:
           files: docker-bake.hcl
           push: ${{ github.event_name != 'pull_request' }}
           set: |
-            *.platform=linux/amd64,linux/arm64
+            *.platform=linux/arm64
             *.cache-from=type=gha
             full.cache-to=type=gha,mode=max
