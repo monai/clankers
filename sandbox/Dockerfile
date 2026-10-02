@@ -2,13 +2,8 @@ ARG UV_VERSION=0.12.21
 
 FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
 
-FROM debian:trixie-slim
-
-ARG AGENT_UID=1000
-ARG AGENT_GID=1000
-ARG CLAUDE_CODE_VERSION=2.1.287
-ARG CODEX_VERSION=0.159.3
-ARG PI_CODING_AGENT_VERSION=1.0.0
+# ---- base: core tooling, runs as root, no agents ----
+FROM debian:trixie-slim AS base
 
 COPY rootfs/ /
 
@@ -16,70 +11,60 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    bash-completion \
-    build-essential \
-    chromium \
     curl \
-    dnsutils \
     fd-find \
-    file \
     gh \
     git \
-    gnupg \
-    iproute2 \
-    iputils-ping \
     jq \
     less \
     locales \
-    lsof \
-    make \
-    netcat-openbsd \
     nodejs \
     openssh-client \
-    patch \
-    pkg-config \
     procps \
     python-is-python3 \
     python3 \
     ripgrep \
-    rsync \
-    shellcheck \
-    shfmt \
-    socat \
-    sqlite3 \
-    strace \
-    sudo \
-    time \
-    tmux \
-    tree \
     unzip \
-    vim \
-    xxd \
     xz-utils \
-    yq \
-    zip \
     && rm -rf /var/lib/apt/lists/* \
     && sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && locale-gen en_US.UTF-8
 
-RUN sed -i 's/^CHROMIUM_FLAGS=""/CHROMIUM_FLAGS="--no-sandbox"/' /usr/bin/chromium
-
 COPY --from=uv /uv /uvx /usr/local/bin/
 
-RUN npm install -g \
-    "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" \
-    "@earendil-works/pi-coding-agent@${PI_CODING_AGENT_VERSION}" \
-    "@openai/codex@${CODEX_VERSION}" \
-    && npm cache clean --force
+ENV LANG=en_US.UTF-8
 
-ENV PATH="/usr/local/bin:/home/agent/.local/bin:$PATH" \
-    TERM=xterm-256color \
-    COLORTERM=truecolor \
-    LESS=-R \
-    LANG=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8 \
-    DISABLE_AUTOUPDATER=1 \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+# ---- slim-root: agent user, coding agents and everyday shell tools (root) ----
+FROM base AS slim-root
+
+ARG AGENT_UID=1000
+ARG AGENT_GID=1000
+ARG CLAUDE_CODE_VERSION=2.1.287
+ARG CODEX_VERSION=0.159.3
+ARG PI_CODING_AGENT_VERSION=1.0.0
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash-completion \
+    bind9-dnsutils \
+    file \
+    iproute2 \
+    iputils-ping \
+    lsof \
+    make \
+    netcat-openbsd \
+    patch \
+    rsync \
+    shellcheck \
+    shfmt \
+    socat \
+    strace \
+    sudo \
+    time \
+    tmux \
+    vim \
+    xxd \
+    zip \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --gid "$AGENT_GID" agent \
     && useradd --uid "$AGENT_UID" --gid "$AGENT_GID" --create-home --shell /bin/bash agent \
@@ -88,6 +73,38 @@ RUN groupadd --gid "$AGENT_GID" agent \
     && echo "agent ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/agent \
     && chmod 0440 /etc/sudoers.d/agent
 
+RUN npm install -g \
+    "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" \
+    "@earendil-works/pi-coding-agent@${PI_CODING_AGENT_VERSION}" \
+    "@openai/codex@${CODEX_VERSION}" \
+    && npm cache clean --force
+
+ENV PATH="/home/agent/.local/bin:$PATH" \
+    TERM=xterm-256color \
+    COLORTERM=truecolor \
+    LESS=-R \
+    DISABLE_AUTOUPDATER=1
+
+# ---- full-root: everything else (root) ----
+FROM slim-root AS full-root
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    chromium \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN sed -i 's/^CHROMIUM_FLAGS=""/CHROMIUM_FLAGS="--no-sandbox"/' /usr/bin/chromium
+
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
+# ---- published targets ----
+FROM slim-root AS slim
+USER agent
+WORKDIR /workspace
+CMD ["bash"]
+
+FROM full-root AS full
 USER agent
 WORKDIR /workspace
 CMD ["bash"]
