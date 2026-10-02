@@ -5,6 +5,8 @@ FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
 # ---- base: core tooling, runs as root, no agents ----
 FROM debian:trixie-slim AS base
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 COPY rootfs/ /
 
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates \
@@ -37,6 +39,7 @@ ENV LANG=en_US.UTF-8
 # ---- slim-root: agent user, coding agents and everyday shell tools (root) ----
 FROM base AS slim-root
 
+ARG DEBIAN_FRONTEND=noninteractive
 ARG AGENT_UID=1000
 ARG AGENT_GID=1000
 ARG CLAUDE_CODE_VERSION=2.1.287
@@ -87,6 +90,8 @@ ENV PATH="/home/agent/.local/bin:$PATH" \
 
 # ---- full-root: everything else (root) ----
 FROM slim-root AS full-root
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
