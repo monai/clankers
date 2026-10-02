@@ -1,3 +1,7 @@
+ARG UV_VERSION=0.12.21
+
+FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
+
 FROM debian:trixie-slim
 
 ARG AGENT_UID=1000
@@ -5,7 +9,6 @@ ARG AGENT_GID=1000
 ARG CLAUDE_CODE_VERSION=2.1.287
 ARG CODEX_VERSION=0.159.3
 ARG PI_CODING_AGENT_VERSION=1.0.0
-ARG UV_VERSION=0.12.21
 
 COPY rootfs/ /
 
@@ -61,22 +64,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN sed -i 's/^CHROMIUM_FLAGS=""/CHROMIUM_FLAGS="--no-sandbox"/' /usr/bin/chromium
 
-RUN set -eux; \
-    case "$(dpkg --print-architecture)" in \
-      amd64) uv_arch="x86_64" ;; \
-      arm64) uv_arch="aarch64" ;; \
-      *) echo "unsupported uv architecture: $(dpkg --print-architecture)" >&2; exit 1 ;; \
-    esac; \
-    uv_asset="uv-${uv_arch}-unknown-linux-gnu.tar.gz"; \
-    uv_url="https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/${uv_asset}"; \
-    curl -fsSLo "/tmp/${uv_asset}" "$uv_url"; \
-    curl -fsSLo "/tmp/${uv_asset}.sha256" "${uv_url}.sha256"; \
-    cd /tmp; \
-    sha256sum -c "${uv_asset}.sha256"; \
-    tar -xzf "$uv_asset"; \
-    install -m 0755 "uv-${uv_arch}-unknown-linux-gnu/uv" /usr/local/bin/uv; \
-    install -m 0755 "uv-${uv_arch}-unknown-linux-gnu/uvx" /usr/local/bin/uvx; \
-    rm -rf "/tmp/${uv_asset}" "/tmp/${uv_asset}.sha256" "/tmp/uv-${uv_arch}-unknown-linux-gnu"
+COPY --from=uv /uv /uvx /usr/local/bin/
 
 RUN npm install -g \
     "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" \
