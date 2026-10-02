@@ -43,7 +43,9 @@ jobs:
         env:
           REGISTRY: ghcr.io/${{ github.repository }}
         with:
+          source: .
           workdir: sandbox
+          files: docker-bake.hcl
           push: ${{ github.event_name != 'pull_request' }}
           set: |
             *.platform=linux/amd64,linux/arm64
