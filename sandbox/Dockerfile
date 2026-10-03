@@ -47,8 +47,11 @@ ARG CODEX_VERSION=0.159.3
 ARG PI_CODING_AGENT_VERSION=1.0.0
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    apparmor \
     bash-completion \
     bind9-dnsutils \
+    docker-cli \
+    docker.io \
     file \
     iproute2 \
     iputils-ping \
@@ -70,7 +73,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --gid "$AGENT_GID" agent \
-    && useradd --uid "$AGENT_UID" --gid "$AGENT_GID" --create-home --shell /bin/bash agent \
+    && useradd --uid "$AGENT_UID" --gid "$AGENT_GID" --groups docker --create-home --shell /bin/bash agent \
     && mkdir -p /home/agent/.local/bin /workspace \
     && chown -R agent:agent /home/agent /workspace \
     && echo "agent ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/agent \
