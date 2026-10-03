@@ -10,8 +10,8 @@ A **contract** is what a unit promises its callers for all valid inputs: outputs
 
 ## Process
 
-1. Read the source. Write down the contract of each unit (function, method, endpoint, CLI command, integration surface). Read the code to learn what a unit does; take what it should do from types, docs, specs, issues, and callers. Where no source settles a contract aspect, leave its tests as they are and record an open question.
-2. Read the tests. Map each test to the contract aspect it checks.
+1. Write down the contract of each unit (function, method, endpoint, CLI command, integration surface). Read the code to learn what a unit does; take what it should do from types, docs, specs, issues, and callers. Where no source settles a contract aspect, leave its tests as they are and record an open question.
+2. Map each test to the contract aspect it checks.
 3. Run the project's tools: tests, line and branch coverage, mutation testing if available. Find which tests came in with bug fixes.
 4. Check every test against the rules below. Record each finding with file, line, and rule.
 5. Replace tests that break a rule with contract tests. Run the suite.
@@ -22,7 +22,7 @@ Done when every test maps to one contract aspect or open question, every settled
 
 ### 1. Bug-shaped tests
 
-A **bug-shaped** test is a regression test written from a bug report: one input that broke, one symptom asserted. The fix is written to pass it, so both share the same narrow view. Both stay green while the same class of bug lives on in inputs neither checks.
+A **bug-shaped** test is a regression test written from a bug report: one input that broke, one symptom asserted. The fix is written to pass it, so both share the same narrow view.
 
 Signs: named after an issue or symptom, one hard-coded input, added in the same commit as a fix.
 
@@ -61,15 +61,13 @@ def parse(s):
 # green, and the original bug case is now one row in the class it belongs to
 </example>
 
-Step 2 is bug-shaped. Step 5 replaces it.
-
 ### 2. Tautological tests
 
 A **tautological** test cannot fail while the code runs. Forms:
 
 - The expected value is computed with the code's own logic.
 - The test asserts a mock returns what the test told it to.
-- The test asserts the code's internal calls, mirroring the implementation.
+- The test asserts the code's internal calls.
 - The assertion holds for any result: no assertion, `assert True`, `is not None` on a value that is never `None`.
 - A snapshot or golden file generated from current output, never checked by hand.
 
@@ -79,18 +77,18 @@ Write expected values by hand from the contract. Prove each test can fail: break
 
 Every test value is either contract or filler. Contract values are what the code checks or transforms. Keep them exact.
 
-Make filler obviously fake, so the values that matter stand out. A realistic value looks like it matters.
+Make filler obviously fake, so the values that matter stand out.
 
-Fake means a placeholder no one mistakes for real: `"foo"`, `1`, `example.test`. Fix filler that varies on its own, such as time and randomness.
+Fake means a placeholder: `"foo"`, `1`, `example.test`. Fix filler that varies on its own, such as time and randomness.
 
 ### 4. Patchwork suites
 
-A **patchwork** suite grows one test per edit. Each test may be correct, but together they read as patches. Signs: gaps (aspects with no test), overlaps (several tests on one aspect), tests named after changes instead of behaviour, tests ordered by when they were added.
+A **patchwork** suite grows one test per edit. Signs: gaps (aspects with no test), overlaps (several tests on one aspect), tests named after changes instead of behaviour, tests ordered by when they were added.
 
 Build the suite bottom-up from contracts:
 
 - One test checks one contract aspect.
-- One group of tests covers one unit's whole contract: function, method, endpoint, CLI command, integration surface.
+- One group of tests covers one unit's whole contract.
 - The suite fully covers a larger surface: class, module, package, public API, service.
 
 Name each test after the aspect it checks. Merge overlaps into one parametrized test. Fill gaps. Order tests by the contract.
