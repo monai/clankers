@@ -1,6 +1,6 @@
 ---
 name: caretaker
-description: Rewrite tests against the code's contract.
+description: Rewrite tests and fix code to match the contract.
 disable-model-invocation: true
 ---
 
