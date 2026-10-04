@@ -1,5 +1,5 @@
 ---
-name: test-caretaker
+name: caretaker
 description: Rewrite tests against the code's contract.
 disable-model-invocation: true
 ---
