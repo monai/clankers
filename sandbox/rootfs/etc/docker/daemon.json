@@ -1,0 +1,4 @@
+{
+  "group": "agent",
+  "storage-driver": "overlay2"
+}

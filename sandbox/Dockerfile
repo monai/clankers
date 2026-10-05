@@ -110,9 +110,11 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 FROM slim-root AS slim
 USER agent
 WORKDIR /workspace
+ENTRYPOINT ["/usr/local/bin/sandbox-entrypoint"]
 CMD ["bash"]
 
 FROM full-root AS full
 USER agent
 WORKDIR /workspace
+ENTRYPOINT ["/usr/local/bin/sandbox-entrypoint"]
 CMD ["bash"]

@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+if mountpoint -q /storage; then
+  sudo /usr/local/sbin/start-dockerd || echo "sandbox-entrypoint: dockerd failed to start" >&2
+fi
+
+exec "$@"

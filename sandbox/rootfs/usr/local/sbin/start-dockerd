@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+
+for dir in docker containerd; do
+  mkdir -p "/storage/$dir" "/var/lib/$dir"
+  mountpoint -q "/var/lib/$dir" || mount --bind "/storage/$dir" "/var/lib/$dir"
+done
+
+dockerd >/var/log/dockerd.log 2>&1 &
