@@ -1,4 +1,4 @@
-CURSOR_REPOSITORY := build/cursor-plugins
+CURSOR_REPOSITORY := ../upstream/cursor-plugins
 UPSTREAM := $(CURSOR_REPOSITORY)/pstack
 SOURCE_MANIFEST := $(UPSTREAM)/.cursor-plugin/plugin.json
 SOURCE_SKILLS := $(UPSTREAM)/skills
@@ -14,14 +14,15 @@ CODEX_REFERENCE := codex/skills/poteto-mode/references/codex.md
 
 .PHONY: all clean
 
-all: | $(SOURCE_MANIFEST)
+all: $(SOURCE_MANIFEST)
+	$(MAKE) clean
 	$(MAKE) plugin
 
 $(SOURCE_MANIFEST):
-	git clone --depth=1 https://github.com/cursor/plugins.git $(CURSOR_REPOSITORY)
+	git -C ../.. submodule update --init -- plugins/upstream/cursor-plugins
 
 clean:
-	$(RM) -r build claude codex pi
+	$(RM) -r claude codex $(PI_DIR)
 
 include ../plugin.mk
 

@@ -16,9 +16,9 @@ A **contract** is what a unit promises its callers for all valid inputs: outputs
 4. Check every test against the rules below. Record each finding with file, line, and rule.
 5. Replace tests that break a rule with contract tests. Where a contract test fails, fix the code. Remove workarounds for the bug. Run the suite.
 
-Done when every test maps to one contract aspect or open question, every settled aspect has a test, and the suite is green. End with this report, one row per item, and "None" for an empty section:
+Done when every test maps to one contract aspect or open question, every settled aspect has a test, and the suite is green. End with this report, one row per item, and "None" for an empty section. Output it as markdown, without the fence:
 
-<report>
+```markdown
 ## Findings
 | Test | Rule | Problem |
 |---|---|---|
@@ -33,7 +33,7 @@ Done when every test maps to one contract aspect or open question, every settled
 | Unit | Aspect | What is unclear | Tests kept |
 |---|---|---|---|
 | `file:unit` | one phrase | one sentence | `test_name`, … |
-</report>
+```
 
 ## Rules
 

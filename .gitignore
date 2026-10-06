@@ -4,3 +4,5 @@ memory
 node_modules
 
 .env
+
+/plugins/dist/

@@ -1,5 +1,5 @@
+/^[ \t]+allow_implicit_invocation:/ { sub(/:.*/, ": false"); done = 1 }
 { lines[NR] = $0 }
-/^[ \t]+allow_implicit_invocation:/ { done = 1 }
 END {
 	for (i = 1; i <= NR; i++) {
 		print lines[i]

@@ -1,9 +1,13 @@
 SCRIPTS := $(dir $(lastword $(MAKEFILE_LIST)))scripts
+PI_DIR := ../dist/pi/$(notdir $(CURDIR))
+.DEFAULT_GOAL := all
+.DELETE_ON_ERROR:
+
 copy = cat $(1) > $(2) && if [ -x $(1) ]; then chmod +x $(2); fi
 
 SKILL_FILES := $(if $(SKILLS),$(patsubst $(SOURCE_SKILLS)/%,%,$(shell find $(SKILLS:%=$(SOURCE_SKILLS)/%) -type f ! -name .DS_Store)))
 AGENT_FILES := $(filter-out $(EXCLUDED_AGENTS:%=%.md),$(if $(wildcard $(SOURCE_AGENTS)),$(patsubst $(SOURCE_AGENTS)/%,%,$(shell find $(SOURCE_AGENTS) -type f ! -name .DS_Store))))
-DISABLED_SKILLS := $(if $(SKILLS),$(patsubst $(SOURCE_SKILLS)/%/SKILL.md,%,$(shell awk -f $(SCRIPTS)/model-invocation-disabled.awk $(SKILLS:%=$(SOURCE_SKILLS)/%/SKILL.md))))
+DISABLED_SKILLS := $(if $(SKILLS),$(patsubst $(SOURCE_SKILLS)/%/SKILL.md,%,$(shell awk -v default_disabled=$(DEFAULT_DISABLE_MODEL_INVOCATION) -f $(SCRIPTS)/model-invocation-disabled.awk $(SKILLS:%=$(SOURCE_SKILLS)/%/SKILL.md))))
 
 CLAUDE_SKILL_MDS := $(SKILLS:%=claude/skills/%/SKILL.md)
 CLAUDE_SKILL_FILES := $(filter-out $(CLAUDE_SKILL_MDS),$(SKILL_FILES:%=claude/skills/%))
@@ -19,8 +23,8 @@ CLAUDE_FILES := claude/.claude-plugin/plugin.json $(CLAUDE_SKILL_MDS) $(CLAUDE_S
 CODEX_FILES := codex/.codex-plugin/plugin.json $(CODEX_SKILL_MDS) $(CODEX_POLICIES) $(CODEX_SKILL_FILES) $(CODEX_AGENT_TOMLS) $(CODEX_AGENT_FILES)
 
 pi_skill_name = $(if $(PI_NAMESPACE),$(PI_NAMESPACE)-)$(notdir $(1))
-PI_SKILL_MDS := $(SKILLS:%=pi/skills/%/SKILL.md)
-PI_SKILL_FILES := $(filter-out $(PI_SKILL_MDS),$(SKILL_FILES:%=pi/skills/%))
+PI_SKILL_MDS := $(SKILLS:%=$(PI_DIR)/skills/%/SKILL.md)
+PI_SKILL_FILES := $(filter-out $(PI_SKILL_MDS),$(SKILL_FILES:%=$(PI_DIR)/skills/%))
 PI_FILES := $(PI_SKILL_MDS) $(PI_SKILL_FILES)
 
 .PHONY: plugin
@@ -36,9 +40,9 @@ codex/.codex-plugin/plugin.json: $(SOURCE_MANIFEST)
 	@mkdir -p $(@D)
 	jq 'del(.agents)' < $< > $@
 
-$(CLAUDE_SKILL_MDS): claude/skills/%/SKILL.md: $(SOURCE_SKILLS)/%/SKILL.md $(SCRIPTS)/set-name.awk $(SCRIPTS)/add-note.awk
+$(CLAUDE_SKILL_MDS): claude/skills/%/SKILL.md: $(SOURCE_SKILLS)/%/SKILL.md $(SCRIPTS)/set-name.awk $(SCRIPTS)/set-model-invocation.awk $(SCRIPTS)/add-note.awk
 	@mkdir -p $(@D)
-	awk -v name=$(notdir $*) -f $(SCRIPTS)/set-name.awk $< | awk -v note='$(if $(filter $*,$(NOTE_SKILLS)),$(CLAUDE_NOTE))' -f $(SCRIPTS)/add-note.awk > $@
+	awk -v default_disabled=$(DEFAULT_DISABLE_MODEL_INVOCATION) -f $(SCRIPTS)/set-model-invocation.awk $< | awk -v name=$(notdir $*) -f $(SCRIPTS)/set-name.awk | awk -v note='$(if $(filter $*,$(NOTE_SKILLS)),$(CLAUDE_NOTE))' -f $(SCRIPTS)/add-note.awk > $@
 
 $(CLAUDE_SKILL_FILES): claude/skills/%: $(SOURCE_SKILLS)/%
 	@mkdir -p $(@D)
@@ -72,10 +76,10 @@ $(CODEX_POLICIES): codex/skills/%/agents/openai.yaml: $$(wildcard $(SOURCE_SKILL
 	@mkdir -p $(@D)
 	awk -f $(SCRIPTS)/disable-implicit-invocation.awk $(filter %.yaml,$^) /dev/null > $@
 
-$(PI_SKILL_MDS): pi/skills/%/SKILL.md: $(SOURCE_SKILLS)/%/SKILL.md $(SCRIPTS)/set-name.awk
+$(PI_SKILL_MDS): $(PI_DIR)/skills/%/SKILL.md: $(SOURCE_SKILLS)/%/SKILL.md $(SCRIPTS)/set-name.awk $(SCRIPTS)/set-model-invocation.awk
 	@mkdir -p $(@D)
-	awk -v name=$(call pi_skill_name,$*) -f $(SCRIPTS)/set-name.awk $< > $@
+	awk -v default_disabled=$(DEFAULT_DISABLE_MODEL_INVOCATION) -f $(SCRIPTS)/set-model-invocation.awk $< | awk -v name=$(call pi_skill_name,$*) -f $(SCRIPTS)/set-name.awk > $@
 
-$(PI_SKILL_FILES): pi/skills/%: $(SOURCE_SKILLS)/%
+$(PI_SKILL_FILES): $(PI_DIR)/skills/%: $(SOURCE_SKILLS)/%
 	@mkdir -p $(@D)
 	$(call copy,$<,$@)

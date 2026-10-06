@@ -1,3 +1,11 @@
-FNR == 1 { frontmatter = ($0 == "---"); next }
-frontmatter && $0 == "---" { frontmatter = 0 }
-frontmatter && /^disable-model-invocation:[ \t]*true[ \t]*$/ { print FILENAME; frontmatter = 0 }
+FNR == 1 { frontmatter = ($0 == "---"); disabled = default_disabled; next }
+frontmatter && /^disable-model-invocation:/ {
+	value = $0
+	sub(/^disable-model-invocation:[ \t]*/, "", value)
+	sub(/[ \t]*(#.*)?$/, "", value)
+	disabled = value
+}
+frontmatter && $0 == "---" {
+	if (disabled == "true") print FILENAME
+	frontmatter = 0
+}

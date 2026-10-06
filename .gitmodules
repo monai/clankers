@@ -1,0 +1,6 @@
+[submodule "plugins/upstream/mattpocock-skills"]
+	path = plugins/upstream/mattpocock-skills
+	url = https://github.com/mattpocock/skills.git
+[submodule "plugins/upstream/cursor-plugins"]
+	path = plugins/upstream/cursor-plugins
+	url = https://github.com/cursor/plugins.git

@@ -1,6 +1,7 @@
 ---
 name: sample
 description: Use this sample skill to confirm the essentials plugin loads bundled skills.
+disable-model-invocation: true
 ---
 
 # Sample
