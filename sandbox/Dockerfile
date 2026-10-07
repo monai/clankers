@@ -50,8 +50,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apparmor \
     bash-completion \
     bind9-dnsutils \
-    docker-cli \
-    docker.io \
+    docker-ce \
+    docker-ce-cli \
     file \
     iproute2 \
     iputils-ping \

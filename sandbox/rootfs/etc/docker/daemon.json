@@ -1,4 +1,5 @@
 {
   "group": "agent",
-  "storage-driver": "overlay2"
+  "storage-driver": "overlay2",
+  "firewall-backend": "nftables"
 }
