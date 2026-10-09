@@ -1,12 +1,14 @@
 ---
 name: caretaker
-description: Rewrite tests and fix code to match the contract.
+description: Review tests against contracts; fix tests and code when asked.
 disable-model-invocation: true
 ---
 
 # Contract tests
 
-A **contract** is what a unit promises its callers for all valid inputs: outputs, errors, side effects, invariants. A test that checks anything else locks in history or implementation. Replace those tests with contract tests.
+A **contract** is what a unit promises its callers for all valid inputs: outputs, errors, side effects, invariants. A test that checks anything else locks in history or implementation.
+
+Default to **report-only**. Use **act mode** only when the user explicitly asks to change tests or code. In act mode, complete the analysis and fixes in one run.
 
 ## Process
 
@@ -14,15 +16,15 @@ A **contract** is what a unit promises its callers for all valid inputs: outputs
 2. Map each test to the contract aspect it checks.
 3. Run the project's tools: tests, line and branch coverage, mutation testing if available. Find tests that came in with bug fixes, and later tests and code that build on them.
 4. Check every test against the rules below. Record each finding with file, line, and rule.
-5. Replace tests that break a rule with contract tests. Where a contract test fails, fix the code. Remove workarounds for the bug. Run the suite.
+5. In act mode, replace tests that break a rule with contract tests. Where a contract test fails, fix the code. Remove workarounds for the bug. Run the suite.
 
-Done when every test maps to one contract aspect or open question, every settled aspect has a test, and the suite is green. End with this report, one row per item, and "None" for an empty section. Output it as markdown, without the fence:
+Report-only ends after step 4. Output only the Findings table. In act mode, finish when every test maps to one contract aspect or open question, every settled aspect has a test, and the suite is green. Output all three tables. Use one row per item and "None" for an empty section. Output as markdown, without the fence:
 
 ```markdown
 ## Findings
 | Test | Rule | Problem |
 |---|---|---|
-| `file:line` `test_name` | bug-shaped, tautological, fake data, or patchwork | one sentence |
+| `file:line` `test_name` or — | bug-shaped, tautological, fake data, patchwork, missing test, or open question | one sentence |
 
 ## Changes
 | Removed | Added | Code change | Contract aspect |
@@ -45,7 +47,7 @@ Signs: named after an issue or symptom, one hard-coded input, added in the same 
 
 Name the rule the bug broke and the inputs that rule covers. Replace the test with a contract test that covers them, keeping the bug input as one case. Remove tests that lock the bug and workarounds in callers.
 
-<example>
+```python
 # 1. Code with a bug
 def parse(s):
     return s.split(",")
@@ -92,7 +94,7 @@ def parse(s):
 def load_row(line):
     return parse(line)          # workaround no longer needed
 # green; the bug case is now one row in its class
-</example>
+```
 
 ### 2. Tautological tests
 
