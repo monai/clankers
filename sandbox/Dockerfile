@@ -44,7 +44,7 @@ ARG AGENT_UID=1000
 ARG AGENT_GID=1000
 ARG CLAUDE_CODE_VERSION=2.1.296
 ARG CODEX_VERSION=0.162.1
-ARG PI_CODING_AGENT_VERSION=1.1.0
+ARG PI_CODING_AGENT_VERSION=1.2.0
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     apparmor \
