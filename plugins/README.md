@@ -6,7 +6,6 @@ Skills and agents for Claude, Codex, and Pi.
 | --- | --- | --- |
 | essentials | Local | Our skills and agents |
 | mattpocock-skills | 1.3.1 | Engineering workflows |
-| pstack | 0.15.5 | Planning, review, and agent workflows |
 
 ## Use
 
