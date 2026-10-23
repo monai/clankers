@@ -14,6 +14,10 @@ Do not pass `model`.
 
 Start each brief with `Principles:` and the paths of the matching leaves, or `Principles: none match`.
 
+## Models
+
+`models.tsv` maps Claude model and effort to the Codex equivalent. Use it when you pick a model for another harness.
+
 ## Non-negotiables
 
 The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf you read this session.

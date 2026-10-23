@@ -13,7 +13,7 @@ install:
 
 	rm -rf $(USER_CODEX_DIR)/agents
 	mkdir -p $(USER_CODEX_DIR)/agents
-	$(foreach f,$(ESSENTIALS_AGENTS),awk -v name=$(basename $(notdir $(f))) -f plugins/scripts/agent-to-toml.awk $(f) > $(USER_CODEX_DIR)/agents/$(basename $(notdir $(f))).toml;)
+	$(foreach f,$(ESSENTIALS_AGENTS),awk -v name=$(basename $(notdir $(f))) -v models=plugins/essentials/skills/essential-mode/models.tsv -f plugins/scripts/agent-to-toml.awk $(f) > $(USER_CODEX_DIR)/agents/$(basename $(notdir $(f))).toml || exit 1;)
 	cp -a codex/config.toml $(USER_CODEX_DIR)/config.toml
 
 	rm -rf $(USER_PI_DIR)/skills
