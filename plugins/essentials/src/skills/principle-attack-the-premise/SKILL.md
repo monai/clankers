@@ -4,4 +4,4 @@ description: "Apply when two or more fixes that share one premise have failed th
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/attack-the-premise.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/attack-the-premise.md` in full and apply it.

@@ -4,4 +4,4 @@ description: "Apply when you write, change, or keep a test. Assert what the code
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/test-behavior-not-implementation.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/test-behavior-not-implementation.md` in full and apply it.

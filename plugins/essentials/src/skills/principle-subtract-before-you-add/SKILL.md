@@ -4,4 +4,4 @@ description: "Apply when sequencing an addition, refactor, or rewrite. Remove de
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/subtract-before-you-add.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/subtract-before-you-add.md` in full and apply it.

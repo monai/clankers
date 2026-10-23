@@ -4,4 +4,4 @@ description: "Apply when wiring validation, error handling, or framework adapter
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/boundary-discipline.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/boundary-discipline.md` in full and apply it.

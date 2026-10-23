@@ -4,4 +4,4 @@ description: "Apply to multi-step work (sweeps, migrations, runs of similar edit
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/sequence-verifiable-units.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/sequence-verifiable-units.md` in full and apply it.

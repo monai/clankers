@@ -4,4 +4,4 @@ description: "Apply when facing a novel UI interaction or architectural decision
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/exhaust-the-design-space.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/exhaust-the-design-space.md` in full and apply it.

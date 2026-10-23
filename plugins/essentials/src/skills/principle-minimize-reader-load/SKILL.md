@@ -4,4 +4,4 @@ description: "Apply when reviewing or shaping code that's hard to trace. Count l
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/minimize-reader-load.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/minimize-reader-load.md` in full and apply it.

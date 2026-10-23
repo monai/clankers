@@ -4,4 +4,4 @@ description: "Apply when writing stateful logic, or when code branches a lot or 
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/model-the-domain.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/model-the-domain.md` in full and apply it.

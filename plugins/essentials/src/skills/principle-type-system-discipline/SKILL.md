@@ -4,4 +4,4 @@ description: "Apply when designing types, reviewing a function signature, or wri
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/type-system-discipline.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/type-system-discipline.md` in full and apply it.

@@ -4,4 +4,4 @@ description: "Apply when refactoring, evaluating diff size, or tempted to add ab
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/laziness-protocol.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/laziness-protocol.md` in full and apply it.

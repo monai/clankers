@@ -4,4 +4,4 @@ description: "Apply before you trust, report, or act on a number you measured: a
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/explain-the-number.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/explain-the-number.md` in full and apply it.

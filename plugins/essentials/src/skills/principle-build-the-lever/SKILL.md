@@ -4,4 +4,4 @@ description: "Apply to any non-trivial work, not just bulk work: edits, migratio
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/build-the-lever.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/build-the-lever.md` in full and apply it.

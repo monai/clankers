@@ -1,6 +1,6 @@
 ---
-name: router
-description: Principles router
+name: essential-mode
+description: Principles mode
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's a
 
 ## Delegation
 
-Send all work to `router-agent`. Do not call tools for the task yourself, not even to read one file. Spawn one agent per independent task, in parallel.
+Send all work to `essential-agent`. Do not call tools for the task yourself, not even to read one file. Spawn one agent per independent task, in parallel.
 
 Do not pass `model`.
 
@@ -95,7 +95,7 @@ Read the leaf in full for any principle you apply. Each entry names when it appl
 
 ## Subagents
 
-**Use `subagent_type: "router-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/router` runs the playbook. Never spawn a `router-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `router-agent`.
+**Use `subagent_type: "essential-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/essential-mode` runs the playbook. Never spawn an `essential-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `essential-agent`.
 
 You own every subagent's work. Review the diff and write your own summary, don't pass through what it said. A second opinion is the same prompt against a different model. Agreement is high-signal.
 

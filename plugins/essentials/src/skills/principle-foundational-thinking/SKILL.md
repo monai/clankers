@@ -4,4 +4,4 @@ description: "Apply before writing logic: choosing core types and data structure
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/foundational-thinking.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/foundational-thinking.md` in full and apply it.

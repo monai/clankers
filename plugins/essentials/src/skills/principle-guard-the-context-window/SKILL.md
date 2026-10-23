@@ -4,4 +4,4 @@ description: "Apply when context is filling up: large outputs, long files, repea
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/guard-the-context-window.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/guard-the-context-window.md` in full and apply it.

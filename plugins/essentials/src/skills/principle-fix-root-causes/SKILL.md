@@ -4,4 +4,4 @@ description: "Apply when debugging. Trace each symptom back to the first place t
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/fix-root-causes.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/fix-root-causes.md` in full and apply it.

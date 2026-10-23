@@ -4,4 +4,4 @@ description: "Apply when concurrent actors might write to the same file, branch,
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/separate-before-serializing-shared-state.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/separate-before-serializing-shared-state.md` in full and apply it.

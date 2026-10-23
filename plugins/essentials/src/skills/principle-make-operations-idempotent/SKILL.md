@@ -4,4 +4,4 @@ description: "Apply when designing commands, lifecycle steps, or processing loop
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/make-operations-idempotent.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/make-operations-idempotent.md` in full and apply it.

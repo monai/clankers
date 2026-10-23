@@ -4,4 +4,4 @@ description: "Apply during planned rewrites and migrations with explicit phase b
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/outcome-oriented-execution.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/outcome-oriented-execution.md` in full and apply it.

@@ -4,4 +4,4 @@ description: "Apply after completing a task, before declaring done. Verify again
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/prove-it-works.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/prove-it-works.md` in full and apply it.

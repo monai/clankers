@@ -4,4 +4,4 @@ description: "Apply when product, UX, or feature-scope tradeoffs come up. Choose
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/experience-first.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/experience-first.md` in full and apply it.

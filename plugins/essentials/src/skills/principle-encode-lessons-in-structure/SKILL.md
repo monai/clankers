@@ -4,4 +4,4 @@ description: "Apply when you catch yourself writing the same instruction a secon
 disable-model-invocation: true
 ---
 
-Read `${CLAUDE_SKILL_DIR}/../router/principles/encode-lessons-in-structure.md` in full and apply it.
+Read `${CLAUDE_SKILL_DIR}/../essential-mode/principles/encode-lessons-in-structure.md` in full and apply it.
