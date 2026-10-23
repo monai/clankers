@@ -13,9 +13,6 @@ source = "https://github.com/monai/clankers.git"
 [plugins."essentials@clanker-janker"]
 enabled = true
 
-[plugins."mattpocock-skills@clanker-janker"]
-enabled = true
-
 [projects."/workspace"]
 trust_level = "trusted"
 
