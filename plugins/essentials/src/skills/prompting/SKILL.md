@@ -1,12 +1,12 @@
 ---
 name: prompting
-description: Use when writing or revising prompts, system prompts, or agent instructions. Points to prompting guides per model provider.
+description: Guides for writing prompts, system prompts, agent instructions, and skills for Claude and OpenAI models. Use when writing or revising any of them.
 disable-model-invocation: true
 ---
 
 ## Claude
 
-Each `references/claude/<name>.md` is a copy of `https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/<name>`. A link to that page, with or without a `#fragment`, means that file. Read the matching section there instead of fetching the URL.
+The `url` in each file's frontmatter is its source page. A link to that page, with or without a `#fragment`, means that file. Read the matching section there instead of fetching the URL.
 
 - `references/claude/prompting-claude-best-practices.md`
 - `references/claude/prompting-claude-fable-5-1.md`
@@ -14,9 +14,11 @@ Each `references/claude/<name>.md` is a copy of `https://platform.claude.com/doc
 - `references/claude/prompting-claude-sonnet-5-5.md`
 - `references/claude/prompting-claude-haiku-5-5.md`
 
+Read `references/claude/skill-authoring-best-practices.md` when writing a skill.
+
 ## OpenAI
 
-Each `references/openai/<name>.md` is a copy of `https://developers.openai.com/api/docs/guides/<name>.md`. A link to that page, with or without `.md` or a `#fragment`, means that file.
+Each `references/openai/<name>.md` is `https://developers.openai.com/api/docs/guides/<name>.md`. A link to that page, with or without `.md` or a `#fragment`, means that file.
 
 - `references/openai/gpt-6-astra.md` is `latest-model/gpt-6-astra`. It covers `gpt-6.1-sol`, `gpt-6-astra` and `gpt-6-luna`. Its prompting section is written for `gpt-6-astra` and applies to all three.
 - `references/openai/prompt-engineering.md` is general prompt engineering.
