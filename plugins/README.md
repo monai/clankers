@@ -20,14 +20,16 @@ Install plugins through Claude's `/plugin` or Codex's `/plugins`. Start a new Co
 
 ## Maintain
 
-Sources: `essentials/src/` for ours; `upstream/` for pinned Git submodules. Essentials skills default to explicit invocation. Set `disable-model-invocation: false` to allow automatic invocation.
+`essentials/` is one plugin for Claude and Codex. Edit it in place; there is no build. Each skill has `disable-model-invocation: true` in `SKILL.md` for Claude and `agents/openai.yaml` for Codex. Keep both in sync. Set the frontmatter to `false` and delete the YAML to allow automatic invocation.
+
+`mattpocock-skills/` is built from the pinned submodule in `upstream/`.
 
 From the repo root:
 
 ```sh
-make -C plugins         # Build
+make -C plugins         # Build mattpocock-skills
 make -C plugins update  # Update upstreams and build
 make install            # Build and install local settings, agents, and Pi skills
 ```
 
-Commit submodule pins and built `claude/` and `codex/` folders together. Update the versions above. Pi builds stay ignored in `plugins/dist/pi/`.
+Commit submodule pins and built `claude/` and `codex/` folders of `mattpocock-skills` together. Update the versions above. Pi builds stay ignored in `plugins/dist/pi/`.

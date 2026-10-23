@@ -1,5 +1,5 @@
 UPSTREAMS := plugins/upstream/mattpocock-skills
-PLUGINS := essentials mattpocock-skills
+PLUGINS := mattpocock-skills
 
 .PHONY: all clean rebuild update $(PLUGINS) $(PLUGINS:%=clean-%)
 

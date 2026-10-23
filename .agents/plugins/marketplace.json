@@ -8,7 +8,7 @@
       "name": "essentials",
       "source": {
         "source": "local",
-        "path": "./plugins/essentials/codex"
+        "path": "./plugins/essentials"
       },
       "policy": {
         "installation": "AVAILABLE",

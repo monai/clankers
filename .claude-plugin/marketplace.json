@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "essentials",
-      "source": "./plugins/essentials/claude",
+      "source": "./plugins/essentials",
       "description": "Bits and pieces for your clanker janker."
     },
     {
