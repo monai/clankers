@@ -1,51 +1,83 @@
 ---
 name: caretaker
-description: Review tests against contracts; fix tests and code when asked.
+description: Fixes source code that was built around one bug fix, then rewrites tests to match the contract.
 disable-model-invocation: true
 ---
 
-# Contract tests
+# Caretaker
 
-A **contract** is what a unit promises its callers for all valid inputs: outputs, errors, side effects, invariants. A test that checks anything else locks in history or implementation.
+A **contract** is what a unit promises its callers for all valid inputs: outputs, errors, side effects, invariants. Each item is a **promise**. A **premise** is a narrow rule that code or a test follows instead of a promise. It usually comes from one bug report.
 
-Default to **report-only**. Use **act mode** only when the user explicitly asks to change tests or code. In act mode, complete the analysis and fixes in one run.
+By default, use **report-only** mode and change nothing. Use **act mode** only when the user asks for changes. In act mode, do all steps in one run.
 
 ## Process
 
-1. Write down the contract of each unit (function, method, endpoint, CLI command, integration surface). Read the code to learn what a unit does; take what it should do from types, docs, specs, issues, and callers. Existing tests are not a source. Ignore caller code that works around a bug. Where no source settles a contract aspect, keep its tests and record an open question.
-2. Map each test to the contract aspect it checks.
-3. Run the project's tools: tests, line and branch coverage, mutation testing if available. Find tests that came in with bug fixes, and later tests and code that build on them.
-4. Check every test against the rules below. Record each finding with file, line, and rule.
-5. In act mode, replace tests that break a rule with contract tests. Where a contract test fails, fix the code. Remove workarounds for the bug. Run the suite.
+1. Write the contract of each unit. Take promises from types, docs, specs, issues, and callers. Do not take them from the unit's own code, its tests, or workarounds in callers.
+2. Check the source and the tests against the principles below.
+3. If nothing tells you what a promise is, the promise is **unclear**. Do not change anything for it. Report it.
+4. In act mode, fix principle 1 in the source and the tests together. Then fix the tests for principles 2 to 4. Run the tests.
 
-Report-only ends after step 4. Output only the Findings table. In act mode, finish when every test maps to one contract aspect or open question, every settled aspect has a test, and the suite is green. Output all three tables. Use one row per item and "None" for an empty section. Output as markdown, without the fence:
+Report-only ends after step 3.
 
-```markdown
-## Findings
-| Test | Rule | Problem |
-|---|---|---|
-| `file:line` `test_name` or — | bug-shaped, tautological, fake data, patchwork, missing test, or open question | one sentence |
+## Report
 
-## Changes
-| Removed | Added | Code change | Contract aspect |
-|---|---|---|---|
-| `test_name` or — | `test_name` or — | `file:unit` and one sentence, or — | one sentence |
+Report the source changes for principle 1 and the unclear promises. Do not report test changes. Write one entry for each broken or unclear promise. In report-only mode, the diff is a suggestion. In act mode, it is the change you made. Include every source file you changed. If there are none, say so in one line. Write markdown without the outer fence.
 
-## Open questions
-| Unit | Aspect | What is unclear | Tests kept |
-|---|---|---|---|
-| `file:unit` | one phrase | one sentence | `test_name`, … |
+````markdown
+### `<unit>` in `<path>`
+
+**Promise.** <one sentence>
+
+**Premise.** <one sentence>
+
+**Breaks on.** `<input>` gives `<wrong output>`.
+
+```diff
+--- <path>
+-<line before>
++<line after>
 ```
+````
 
-## Rules
+For an unclear promise, write this entry instead:
 
-### 1. Bug-shaped tests
+````markdown
+### `<unit>` in `<path>`
 
-A **bug-shaped** test is a regression test written from a bug report: one input that broke, one symptom asserted. The fix is written to pass it, so both share the same narrow view. Later edits read the test as a contract and spread the bug into new code, tests, and callers.
+**Unclear.** <the promise and what it could mean>
+````
 
-Signs: named after an issue or symptom, one hard-coded input, added in the same commit as a fix, a later test or caller works around the same input.
+Example:
 
-Name the rule the bug broke and the inputs that rule covers. Replace the test with a contract test that covers them, keeping the bug input as one case. Remove tests that lock the bug and workarounds in callers.
+````markdown
+### `parse` in `src/parse.py`
+
+**Promise.** `parse` returns no empty fields.
+
+**Premise.** Only a trailing empty field is dropped.
+
+**Breaks on.** `",a,b"` gives `["", "a", "b"]`.
+
+```diff
+--- src/parse.py
+-    parts = [p.strip() for p in s.split(",")]
+-    return parts[:-1] if parts[-1] == "" else parts
++    return [p for p in (p.strip() for p in s.split(",")) if p]
+--- src/rows.py
+-    return [f for f in parse(line) if f]
++    return parse(line)
+```
+````
+
+## Principles
+
+### 1. Bug-shaped code
+
+A **bug-shaped** test checks one input from one bug report. The fix is written to pass that test, so both follow the same premise. Later code treats the test as the contract and copies the premise into new code, tests, and callers. This is the worst case, because the test shapes the source.
+
+Signs: a branch for one input or symptom; a test named after an issue or symptom; one hard-coded input; test and fix added in the same commit; later code that copies the same branch; callers that filter, retry, or patch the unit's output.
+
+Fix the source and the tests together. Change the unit so it keeps the promise. Delete the special case and the workarounds in callers. Replace the bug-shaped test with a test of the promise. Keep the bug input as one case. Delete tests that lock in the premise.
 
 ```python
 # 1. Code with a bug
@@ -118,12 +150,12 @@ Fake means a placeholder: `"foo"`, `1`, `example.test`. Fix filler that varies o
 
 ### 4. Patchwork suites
 
-A **patchwork** suite grows one test per edit. Signs: gaps (aspects with no test), overlaps (several tests on one aspect), tests named after changes instead of behaviour, tests ordered by when they were added.
+A **patchwork** suite grows one test per edit. Signs: gaps (promises with no test), overlaps (several tests on one promise), tests named after changes instead of behaviour, tests ordered by when they were added.
 
 Build the suite bottom-up from contracts:
 
-- One test checks one contract aspect.
+- One test checks one promise.
 - One group of tests covers one unit's whole contract.
 - The suite covers a larger surface: class, module, package, public API, service.
 
-Name each test after the aspect it checks. Merge overlaps into one parametrized test. Fill gaps. Order tests by the contract.
+Name each test after the promise it checks. Merge overlaps into one parametrized test. Fill gaps. Order tests by the contract.
