@@ -29,6 +29,7 @@ Make the smallest change. Cut before you reword. Change a word before you add a 
 ### Wording
 
 - Use simple English: common words, short sentences, one idea each, literal meaning ("are in", not "live in").
+- Use the shortest form: a word over a phrase, a pattern over a list.
 - Be concrete and explicit. Name the exact file, block, or step. Replace vague words such as "label", "part", or "owns" with the thing they mean.
 - Keep precise technical terms such as invariants, side effects, callers, and outputs.
 - Say what to do. Write "do not" only when the reader would otherwise do it.
@@ -47,7 +48,7 @@ Make the smallest change. Cut before you reword. Change a word before you add a 
 
 ## Text a model reads
 
-- Cut what the model does by default, such as naming tools it can find itself.
+- Cut what the model does or infers by default, such as naming tools it can find itself.
 - Write the target behavior. Cut rules that guard against one past mistake.
 - Order sections as definitions, steps, output format, then rules.
 - Give an output format as a template with `<placeholders>`, then one filled example.
